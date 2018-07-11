@@ -1,0 +1,49 @@
+botbrain接口文档：http://www.xiaoyaoji.cn/doc/l8N3Iu2nB
+栏目配置信息接口：https://api.botbrain.ai/config/v1/JRVPRMIT9P
+feed 信息接口：https://api.botbrain.ai/rec/v1/JRVPRMIT9P/feed?uid=1223&column_id=106520// feed 表示算法序，time表示时间序
+获取所有分会列表：https://xyh.botbrain.ai/we/cap/getCha
+首页分会活动列表接口链接：https://xyh.botbrain.ai/we/act/list参数：start  请求数据页码  初始为1 pl 页码数  默认为 10
+主会轮播图接口：https://api.botbrain.ai/rec/v1/JRVPRMIT9P/feed?uid=pic&column_id=106688
+
+分会id为106520的分会轮播图： https://api.botbrain.ai/rec/v1/JRVPRMIT9P/feed?uid=pic&column_id=106520&ct=0
+分会详情接口 :https://xyh.botbrain.ai/we/cap/details 参数：id 分会id
+分会活动列表接口：https://xyh.botbrain.ai/we/act/fh_list参数 fh_id: 分会id    start  请求数据页码  初始为1 pl  页码数  默认为 10
+加入分会接口链接：https://xyh.botbrain.ai/we/cap/add 参数：fh_id: 分会id
+退出分会接口链接：https://xyh.botbrain.ai/we/cap/del 参数：fh_id: 分会id
+
+活动详情接口链接：https://xyh.botbrain.ai/we/act/details_json 参数：act_id  活动act_id
+活动报名人员接口接口链接：https://xyh.botbrain.ai/we/act/act_persons参数：act_id:  活动id 一次请求默认12条数据
+活动报名接口链接：https://xyh.botbrain.ai/we/act/reg 参数：act_id:  活动id
+
+我的信息接口：https://xyh.botbrain.ai/we/xy/my_info
+
+校友录接口：https://xyh.botbrain.ai/we/xy/findxy_list 参数 kw:搜索的内容 xyYear:入学年限 xyName:学院名称 fh_id: 分会id
+
+
+
+
+
+id item name
+106519  推荐
+106520  最美武大
+106521  校友动态
+106522  桃李报情
+106688  0北京总会
+106668  1老校友会
+106669  2经济与管理分会
+106670  3法学分会
+106671  4文学分会
+106670  5测绘分会
+106673  6水利电力分会
+106674  7政治与公共管理分
+106675  8校友企业家联谊会 环渤海
+106676  9北京研究生联谊会
+106677  10医学分会
+106678  11互联网A分会
+106679  12信息管理分会
+106680  13传媒分会
+106681  14化学分会
+106682  15物理电信分会
+106683  16外语学院分会
+106684  17历史分会
+106685  18艺术分会
