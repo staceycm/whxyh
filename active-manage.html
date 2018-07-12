@@ -167,7 +167,11 @@
                         if(item.per_data.num!=0){//判断是否显示人员列表
                             personHtml='<div class="registered-list-wrap"><ul class="registered-list">';
                             item.per_data.per_list.forEach(function(item1,idx1){
-                                personHtml+='<li><a href="javascript:;"><img src="'+item1.headImgUrl+'" alt=""></a></li>'
+                                var headImg=d.data.sex=='女'?"assets/img/f-user.png":"/assets/img/m-user.png";
+                                if(item1.headImgUrl && item1.headImgUrl!==""){
+                                    headImg=item.headImgUrl
+                                }
+                                personHtml+='<li><a href="javascript:;"><img src="'+headImg+'" alt=""></a></li>'
                             })
                             if(item.per_data.num>5){
                                 personHtml+='<li><a href="javascript:;"><i class="iconfont">&#xe608;</i></a></li>'

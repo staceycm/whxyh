@@ -117,7 +117,11 @@
                 var listHtml=''
                 if(d.code==0){
                     d.data.per_list.forEach(function(item,idx){
-                        listHtml+='<li><a href="javascript:;"><img src="'+item.headImgUrl+'" alt=""><span>'+item.name+'</span></a></li>';
+                        var headImg=d.data.sex=='女'?"assets/img/f-user.png":"/assets/img/m-user.png";
+                        if(item.headImgUrl && item.headImgUrl!==""){
+                            headImg=item.headImgUrl
+                        }
+                        listHtml+='<li><a href="javascript:;"><img src="'+headImg+'" alt=""><span>'+item.name+'</span></a></li>';
                     })
                     $('.registered-list').append(listHtml);
                     if(d.data.num>=d.data.limitNum){//满额

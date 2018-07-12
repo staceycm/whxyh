@@ -54,11 +54,12 @@
 /*自定义 custom*/
 /* 注册页 join*/
 .weui-btn_plain-primary-copy{
-  color: #30a9ff;
-  border: 1px solid #30a9ff;
-  padding: 5px;
-  line-height: 1.1;
-  font-size: 16px;
+    color: #30a9ff;
+    border: 1px solid #30a9ff;
+    padding: 5px;
+    line-height: 1.1;
+    font-size: 16px;
+    border-radius: 3px;
 }
 .circle-img{
     border-radius: 50%;
@@ -850,16 +851,28 @@
 .page-alumni-record .weui-search-bar{
     background: #ffffff;
 }
+.page-alumni-record .weui-search-bar:after{
+    border-bottom: none;
+}
 .page-alumni-record .weui-search-bar__box,.page-alumni-record .weui-search-bar__label{
     background: #EFEFF4;
+    line-height: 34px;
+}
+.page-alumni-record .weui-search-bar__box .weui-search-bar__input{
+    padding: 8px 0;
 }
 .page-alumni-record .weui-search-bar__cancel-btn{
-    color: #9B9B9B;
+    color: #30a9ff;
+    margin-top: 4px;
+}
+.page-alumni-record .weui-search-bar__box .weui-icon-search{
+    top: 4px;
 }
 .page-alumni-record .select-form{
     background: #fff;
     overflow: hidden;
     height: 44px;
+    border-bottom: 1px solid #D7D6DC;
 }
 .page-alumni-record .select-wrap{
     width: 33%;
@@ -886,7 +899,7 @@
     text-overflow: ellipsis;
     text-align-last: center;
     max-width: 100%;
-    font-size: 15px;
+    font-size: 13px;
     color: #666666;
 }
 .page-alumni-record .select-wrap .weui-select option{
@@ -907,9 +920,9 @@
     border-top: none;
 }
 .page-alumni-record .alumni-count{
-    padding: 0 15px;
-    font-size: 14px;
-    color: #999;
+    padding: 12px 15px 0;
+    font-size: 12px;
+    color: #666;
 }
 .page-alumni-record .alumni-list{
     background: #FFFFFF;
@@ -917,9 +930,9 @@
 }
 .page-alumni-record .alumni-list .weui-media-box{
     margin: 15px;
-    box-shadow: 0 0 10px #D7D6DC;
     padding: 10px;
-    border-radius: 5px;
+    box-shadow: 0 0 12px 0 rgba(0,0,0,0.08);
+    border-radius: 8px;
 }
 .page-alumni-record .alumni-list .weui-media-box__title b{
     color: #333333;

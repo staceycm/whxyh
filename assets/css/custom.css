@@ -572,9 +572,9 @@ to {
 
 .weui-media-box_friends .weui-media-box__hd {
 	margin-right: .8em;
-	width: 48px;
-	height: 48px;
-	line-height: 48px;
+	width: 40px;
+	height: 40px;
+	line-height: 40px;
 	text-align: center;
 	margin-top: 0;
 }
@@ -593,7 +593,7 @@ to {
 }
 
 .weui-media-box_friends .weui-media-box__title {
-	font-size: 14px;
+	font-size: 18px;
 	line-height: 1.1em;
 	margin-bottom: 8px;
 }

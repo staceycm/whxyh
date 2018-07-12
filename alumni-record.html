@@ -24,7 +24,7 @@
                     <span>搜索</span>
                 </label>
             </form>
-            <a href="javascript:" class="weui-search-bar__cancel-btn" id="searchCancel">取消</a>
+            <a href="javascript:" class="weui-search-bar__cancel-btn" id="search">搜索</a>
         </div>
         <div class="select-form">
             <div class="select-wrap">
@@ -127,7 +127,7 @@
             $searchText = $('#searchText'),
             $searchInput = $('#searchInput'),
             $searchClear = $('#searchClear'),
-            $searchCancel = $('#searchCancel');
+            $search = $('#search');
         function hideSearchResult(){
             // $searchResult.hide();
             $searchInput.val('');
@@ -145,6 +145,11 @@
             if(!this.value.length) cancelSearch();
         });
         $searchInput.bind('search',function(){//绑定手机键盘上搜索按钮
+            param.kw=$searchInput.val();
+            param.start=1;
+            getAlumniList('search');
+        })
+        $search.on('click',function(){//搜索按钮搜索
             param.kw=$searchInput.val();
             param.start=1;
             getAlumniList('search');
@@ -183,25 +188,14 @@
             //         $searchResult.hide();
             //     }
             // });
-        $searchClear.on('click', function(){
-            hideSearchResult();
-            $searchInput.focus();
-        });
-        $searchCancel.on('click', function(){
-            cancelSearch();
-            $searchInput.blur();
-        });
-        function bb_toast(content){
-              var $toast = $('#toast');
-              $toast.find('.weui-toast__content').text(content || "已完成");
-              if ($toast.css('display') != 'none') {
-                return;
-              }
-              $toast.fadeIn(100);
-              setTimeout(function () {
-                  $toast.fadeOut(100);
-              }, 2000);
-            }
+        // $searchClear.on('click', function(){
+        //     hideSearchResult();
+        //     $searchInput.focus();
+        // });
+        // $searchCancel.on('click', function(){
+        //     cancelSearch();
+        //     $searchInput.blur();
+        // });
         //1970年至今遍历
         function getYearSelect(){
             var date = new Date();
@@ -256,10 +250,13 @@
                             if(item.xyAcademy2!=null){
                                 xyAcademy2Html='    <p class="weui-media-box__desc" style="padding-bottom:6px;">'+item.xyAcademy2+'-'+item.xyType2+'</p>';
                             }
-
+                            var headImg=d.data.sex=='女'?"assets/img/f-user.png":"/assets/img/m-user.png";
+                            if(item.headImgUrl && item.headImgUrl!==""){
+                                headImg=item.headImgUrl
+                            }
                             alumniHtml+='<div class="weui-media-box weui-media-box_friends">'+
                                            '  <div class="weui-media-box__hd">'+
-                                           '    <img class="weui-media-box__thumb circle-img" src="'+item.headImgUrl+'">'+
+                                           '    <img class="weui-media-box__thumb circle-img" src="'+headImg+'">'+
                                            '  </div>'+
                                            '  <div class="weui-media-box__bd">'+
                                            '    <h4 class="weui-media-box__title">'+
@@ -274,10 +271,10 @@
                         if(d.data.xy_list.length<10){
                              param.all=true;//已经全部加载完
                              if(d.data.xy_list.length==0&&param.start==1){//第一次加载或搜索且数据为空时
-                                   alumniHtml = $('<div class="bigPic_container feed-detail-container">'+
+                                   alumniHtml = $('<div class="bigPic_container feed-detail-container no-content">'+
                                             '<img src="./assets/img/null.png" />'+
                                             '<div class="bigPic_active font12">'+
-                                            '<div class="bigPic_source" style="text-align: center">暂无数据</div>'+
+                                            '<div class="bigPic_source" style="text-align: center">暂无数据~</div>'+
                                             '</div></div>');
                              }
                          }

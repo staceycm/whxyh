@@ -32,9 +32,13 @@
                        document.title='已报名（'+d.data.num+'人）';
                        (d.data.per_list||[]).forEach(function(item,idx){
                            var time = getTimer(item.bm_time);
+                           var headImg=d.data.sex=='女'?"assets/img/f-user.png":"/assets/img/m-user.png";
+                           if(item.headImgUrl && item.headImgUrl!==""){
+                               headImg=item.headImgUrl
+                           }
                            listHtml+='<div class="weui-media-box weui-media-box_friends">'+
                                     '  <div class="weui-media-box__hd">'+
-                                    '    <img class="weui-media-box__thumb circle-img" src="'+item.headImgUrl+'">'+
+                                    '    <img class="weui-media-box__thumb circle-img" src="'+headImg+'">'+
                                     '  </div>'+
                                     '  <div class="weui-media-box__bd">'+
                                     '    <h4 class="weui-media-box__title">'+
