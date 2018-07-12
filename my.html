@@ -32,35 +32,35 @@
                 <div class="weui-media-box weui-media-box_small-appmsg">
                     <div class="weui-cells">
                         <a class="weui-cell weui-cell_access" href="javascript:;">
-                            <div class="weui-cell__hd"><img src="./assets/img/my-card.png" alt="" style="width:20px;margin-right:5px;display:block"></div>
+                            <div class="weui-cell__hd"><img src="./assets/img/my-card.png" alt="" style="width:16px;margin-right:5px;display:block"></div>
                             <div class="weui-cell__bd weui-cell_primary">
                                 <p>我的名片</p>
                             </div>
                             <span class="weui-cell__ft"></span>
                         </a>
                         <a class="weui-cell weui-cell_access" href="javascript:;">
-                            <div class="weui-cell__hd"><img src="./assets/img/my-schoolmate.png" alt="" style="width:20px;margin-right:5px;display:block"></div>
+                            <div class="weui-cell__hd"><img src="./assets/img/my-schoolmate.png" alt="" style="width:16px;margin-right:5px;display:block"></div>
                             <div class="weui-cell__bd weui-cell_primary">
                                 <p>我的校友</p>
                             </div>
                             <span class="weui-cell__ft"></span>
                         </a>
                         <a class="weui-cell weui-cell_access" href="javascript:;">
-                            <div class="weui-cell__hd"><img src="./assets/img/my-active.png" alt="" style="width:20px;margin-right:5px;display:block"></div>
+                            <div class="weui-cell__hd"><img src="./assets/img/my-active.png" alt="" style="width:16px;margin-right:5px;display:block"></div>
                             <div class="weui-cell__bd weui-cell_primary">
                                 <p>我的活动</p>
                             </div>
                             <span class="weui-cell__ft"></span>
                         </a>
                         <a class="weui-cell weui-cell_access" href="javascript:;">
-                            <div class="weui-cell__hd"><img src="./assets/img/my-fh.png" alt="" style="width:20px;margin-right:5px;display:block"></div>
+                            <div class="weui-cell__hd"><img src="./assets/img/my-fh.png" alt="" style="width:16px;margin-right:5px;display:block"></div>
                             <div class="weui-cell__bd weui-cell_primary">
                                 <p>我的分会</p>
                             </div>
                             <span class="weui-cell__ft"></span>
                         </a>
                         <a class="weui-cell weui-cell_access" href="javascript:;">
-                            <div class="weui-cell__hd"><img src="./assets/img/my-msg.png" alt="" style="width:20px;margin-right:5px;display:block"></div>
+                            <div class="weui-cell__hd"><img src="./assets/img/my-msg.png" alt="" style="width:13px;margin-right:5px;display:block"></div>
                             <div class="weui-cell__bd weui-cell_primary">
                                 <p>我的资讯</p>
                             </div>
@@ -100,7 +100,7 @@
            var infoUrl = 'https://xyh.botbrain.ai/we/xy/my_info';
             $.ajax({url:infoUrl,type:'post',dataType:"jsonp",success:function(d){
                 if(d.code==0){
-                     $('.my-info-img').find('img').prop('src',d.data.headImgUrl);
+                     $('.my-info-img').find('img').prop('src',d.data.headImgUrl||'assets/img/default-user.png');
                      $('.my-info-word .weui-media-box__title').find('span').html(d.data.name);
                      $('.my-info-word .weui-media-box__desc').find('span').eq(0).html(d.data.xyYear);
                      $('.my-info-word .weui-media-box__desc').find('span').eq(1).html(d.data.xyName);

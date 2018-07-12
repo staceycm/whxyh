@@ -50,10 +50,10 @@
                        if(start==1){//第一次请求
                            if(d.data.per_list.length<12){ //数据不足12条
                                 if(d.data.per_list.length==0){//无人报名
-                                      listHtml=$('<div class="bigPic_container feed-detail-container">'+
+                                      listHtml=$('<div class="bigPic_container feed-detail-container no-content">'+
                                                   '<img src="./assets/img/null.png" />'+
                                                   '<div class="bigPic_active font12">'+
-                                                  '<div class="bigPic_source" style="text-align: center">暂无数据</div>'+
+                                                  '<div class="bigPic_source" style="text-align: center">暂无数据~</div>'+
                                                   '</div></div>');
                                      $('.registered-list').append(listHtml);
                                 }else{

@@ -22,7 +22,7 @@
                $.ajax({url:myActiveUrl,type:'post',dataType:"jsonp",success:function(d){
                     if(d.code==0){
                          d.data.forEach(function(item,idx){
-                             var start = formatDateTime(item.actStrTime,'datatime'),end = formatDateTime(item.actEndTime,'datatime')
+                             var start = formatDateTime(item.actStrTime,'noyear'),end = formatDateTime(item.actEndTime,'noyear')
                              var status;
                              if(item.status == 1){
                                  status={color:'#3eb6ff',word:'待参加'};
@@ -46,7 +46,7 @@
                          if(d.data.length<10){
                               storage.all=true;//已经全部加载完 返回数据不足10条 说明没有更多数据了
                               if(d.data.length==0&&storage.start==1){
-                                   listHtml=$('<div class="bigPic_container feed-detail-container">'+
+                                   listHtml=$('<div class="bigPic_container feed-detail-container no-content">'+
                                       '<img src="./assets/img/null.png" />'+
                                       '<div class="bigPic_active font12">'+
                                       '<div class="bigPic_source" style="text-align: center">您还没有报名过活动</div>'+

@@ -8,14 +8,15 @@
     <link rel="stylesheet" type="text/css" href="assets/css/w-reset.css">
     <link rel="stylesheet" type="text/css" href="assets/font/iconfont.css">
     <script src="assets/js/jquery-3.1.1.min.js"></script>
+    <script src="assets/js/base.js"></script>
 </head>
 <body>
     <div class="page_bd page-active-detail">
         <div class="bigPic_container">
             <img src='' />
             <div class="bigPic_text_container">
-                <p class="bigPic_text font15">活动名称</p>
-                <div class="bigPic_active font12">
+                <p class="bigPic_text">活动名称</p>
+                <div class="bigPic_active font15">
                     <div class="bigPic_source"><i class="iconfont">&#xe68f;</i> 活动时间：<span>XXXX</span></div>
                     <div class="bigPic_source"><i class="iconfont">&#xe6c3;</i> 活动地点：<span>XXXX</span></div>
                 </div>
@@ -25,7 +26,7 @@
             <div class="weui-panel__hd"><h3>活动详情</h3></div>
             <div class="weui-panel__bd">
                 <div class="weui-media-box weui-media-box_text">
-                    <p class="weui-media-box__desc">报名及时间限制：<span>6月18日报名截止，限50人</span></p>
+                    <p class="weui-media-box__desc">报名及限制：<span>6月18日报名截止，限50人</span></p>
                 </div>
                 <div class="weui-media-box weui-media-box_text">
                     <p class="weui-media-box__desc">活动联系人：<span>人名，1831384028</span><a href="tel:13764567708" class="tel-btn"><i class="iconfont tel-btn">&#xe7ae;</i></a> </p>
@@ -76,44 +77,6 @@
     <!--END dlg_alert-->
     <script>
      $(function(){
-         //提示弹窗toast
-         function bb_toast(content){
-               var $toast = $('#toast');
-               $toast.find('.weui-toast__content').text(content || "已完成");
-               if ($toast.css('display') != 'none') {
-                 return;
-               }
-               $toast.fadeIn(100);
-               setTimeout(function () {
-                   $toast.fadeOut(100);
-               }, 2000);
-             }
-         //提示弹窗 alert
-         function bb_alert(content, btn){
-               var $dialog = $('#dlg_alert');
-               $dialog.fadeIn(200);
-               $dialog.find('.weui-dialog__bd').text(content);
-               $dialog.find('.weui-dialog__btn_primary').text(btn || "知道了");
-               $dialog.find('.weui-dialog__btn').one('click', function () {
-                   $dialog.fadeOut(200);
-               });
-             }
-         //时间戳转换日期 (yyyy-MM-dd HH:mm:ss)
-         function formatDateTime(timeValue) {
-             var date = new Date(timeValue);
-             var y = date.getFullYear();
-             var m = date.getMonth() + 1;
-             m = m < 10 ? ('0' + m) : m;
-             var d = date.getDate();
-             d = d < 10 ? ('0' + d) : d;
-             var h = date.getHours();
-             h = h < 10 ? ('0' + h) : h;
-             var minute = date.getMinutes();
-             var second = date.getSeconds();
-             minute = minute < 10 ? ('0' + minute) : minute;
-             second = second < 10 ? ('0' + second) : second;
-             return y + '年' + m + '月' + d + '日 ' + h + ':' + minute;
-         }
          //获取活动详情
          function getActDetail(){
              var detailUrl = 'https://xyh.botbrain.ai/we/act/details_json?act_id=fxy2017';
@@ -121,7 +84,7 @@
                  console.log(d);
                  //活动开始时间-活动截止时间
                  if(d.code==0){
-                     var start = formatDateTime(d.data.actStrTime),end = formatDateTime(d.data.actEndTime)
+                     var start = formatDateTime(d.data.actStrTime,'noyear'),end = formatDateTime(d.data.actEndTime,'noyear');
                      $('.bigPic_container img').prop('src',d.data.img_url);
                      $('.bigPic_text').html(d.data.name);
                      $('.bigPic_active .bigPic_source').eq(0).find('span').html(start+' ~ '+end);
@@ -133,10 +96,8 @@
                      $('.active-plan-detail .weui-media-box__desc').eq(1).find('a').prop('href','tel:'+d.data.contact_cell);
                      $('.active-plan-detail .weui-media-box__desc').eq(2).find('span').html(d.data.act_abstract);
                      //活动列表
-                     var listHtml='';
-                     d.data.act_plan.forEach(function(item,idx){
-                        listHtml+='<p class="weui-media-box__desc">'+item+'</p>';
-                     })
+                     var  listHtml='<p class="weui-media-box__desc">'+d.data.act_plan+'</p>';
+
                      $('.weui-media-box_text .weui-media-box').append(listHtml);
                      var timestamp = (new Date()).valueOf();
                      if(d.data.regExpTime<=timestamp){//报名时间已经过了 自定义属性change变为0 表示文案不再可调整

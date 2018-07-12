@@ -1,8 +1,8 @@
 //时间戳转为几周前 几月前等
 function getTimer(dateTimeStamp){
     var minute = 1000 * 60;
-    var hour = minute *60;
-    var day = hour *24;
+    var hour = minute * 60;
+    var day = hour * 24;
     var week = day * 7;
     var month = day * 30;
 

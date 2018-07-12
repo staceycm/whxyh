@@ -57,13 +57,14 @@
                         <div class="intro-bg"></div>
                         <div class="intro-word">
                             <span class="intro-word-title">武大校友会简介</span>
-                            <p>这里是校友会简介这里是校友会简介这里是校友会简介这里是校友会简介</p>
+                            <p class="font14">武汉大学北京校友会成立于1983年，首任名誉会长是叶圣陶先生。李锐学长、董辅礽老师均担任过北京校友会会长。现任会长为武汉大学79级校友陈东升。<br/>
+                               北京校友会希望可以团结在北京的武大历届校友，互相帮助，为北京的城市发展、国家的进步带来积极影响和贡献。</p>
                         </div>
                         <div class="intro-frame">
                             <span class="intro-frame-title">武大校友会架构</span>
                             <div class="intro-frame-list">
                                 <ul>
-                                    <li><a class="bg1 font20" href="./fh_intro.html?id=106668">老校友会</a></li>
+                                    <!--<li><a class="bg1 font20" href="./fh_intro.html?id=106668">老校友会</a></li>
                                     <li><a class="bg1 font18" href="./fh_intro.html?id=106669">经管分会</a></li>
                                     <li><a class="bg2 font22" href="./fh_intro.html?id=106678">互联网AI分会</a></li>
                                     <li><a class="bg1 font18" href="./fh_intro.html?id=106679">信管分会</a></li>
@@ -80,7 +81,7 @@
                                     <li><a class="bg3 font22" href="./fh_intro.html?id=106682">物理电信分会</a></li>
                                     <li><a class="bg1 font18" href="./fh_intro.html?id=106675">环渤海分会</a></li>
                                     <li><a class="bg2 font22" href="./fh_intro.html?id=106677">医学分会</a></li>
-                                    <li><a class="bg1 font18" href="./fh_intro.html?id=106677">城设分会</a></li>
+                                    <li><a class="bg1 font18" href="./fh_intro.html?id=106677">城设分会</a></li>-->
                                 </ul>
                             </div>
                         </div>
@@ -167,7 +168,7 @@
          //分会列表获取
          function getFenHui(){
              var fhUrl = 'https://xyh.botbrain.ai/we/cap/getCha'
-             var fhHtml='';
+             var fhHtml='',fhJjHtml='';
              var colArr=['#f5b8b8','#ff9393','#85aff0','#b9d784','#ffc549',
                   '#f0a786','#89c9fe','#bfa0ee','#e5c144','#75cc81',
                   '#5bd0d5','#ff9157','#4eb3f1','#ff8e85','#e0ce9d',
@@ -177,8 +178,9 @@
                   '#4eb3f1','#ff8e85','#e0ce9d','#ffb8eb','#9dc4ff','#8fdc6b']
              $.ajax({url:fhUrl,type:'post',dataType:"jsonp",success:
                 function(d){
-                      d.data.forEach(function(item,idx){
+                      (d.data||[]).forEach(function(item,idx){
                                var firstLeter = item.jc_name.substr(0,1);
+                               var randomNum = Math.ceil(Math.random()*2);
                                if(idx<4){
                                     fhHtml='<li data-fhid="'+item.id+'" ><a href="./fh_intro.html?id='+item.id+'"><span style="background: '+colArr[idx]+'">'+firstLeter+'</span>'+item.jc_name+'</a></li>';
                                }else if(idx==4){
@@ -188,8 +190,10 @@
                                    fhHtml='<li class="branch-more" data-fhid="'+item.id+'"><a href="./fh_intro.html?id='+item.id+'"><span style="background: '+colArr[idx]+'">'+firstLeter+'</span>'+item.jc_name+'</a></li>'
                                }
                                $('.branch-list').append(fhHtml);
+                               fhJjHtml+='<li><a class="bg'+randomNum+'" href="./fh_intro.html?id='+item.id+'">'+item.jc_name+'</a></li>'
                            })
                            $('.branch-list').append('<li class="branch-more show-less"><i class="icon iconfont">&#xe600;</i>收起</li>');
+                           $('.intro-frame-list ul').append(fhJjHtml);
                             //显示更多
                            $('.show-more').on('click touchend',function(){
                                $(this).hide('fast',function(){
@@ -253,29 +257,31 @@
          }
          //各栏目数据渲染
          function renderList(type){
-            var feedUrl = 'https://api.botbrain.ai/rec/v1/JRVPRMIT9P/feed?uid=1223&column_id='+storage.feed.show;
+             var feedUrl = 'https://api.botbrain.ai/rec/v1/JRVPRMIT9P/time?uid=1223&column_id='+storage.feed.show+'&action=1';
+             if(type=='change'){
+                 $('.feed-detail').html('');
+             }else{//add 下拉加载
+                 feedUrl = 'https://api.botbrain.ai/rec/v1/JRVPRMIT9P/time?uid=1223&column_id='+storage.feed.show+'&action=3&load_cursor='+storage.feed['column'+storage.feed.show].load_cursor+'&refresh_cursor='+storage.feed['column'+storage.feed.show].refresh_cursor;
+             }
             getListFlag=false;
              $.getJSON(feedUrl,{},function(d){
                  if(d.code==0){
-                     if(type=='change'){
-                        $('.feed-detail').html('');
-                     }else{}//add 下拉加载
                      d.data.items.map(function(item,index){
                          var time = getTimer(item.insert_time);
                          if(item.layout == '1'){//无图
                             list = $('<div class="noPic_container feed-detail-container"><a href="'+item.view_url+'">'+
-                                    '<p class="noPic_text font15">'+item.title+'</p>'+
-                                    '<div class="noPic_active font12">'+
+                                    '<p class="noPic_text font17">'+item.title+'</p>'+
+                                    '<div class="noPic_active font14">'+
                                     '<div class="noPic_summary">'+item.summary+'</div>'+
-                                    '<div class="noPic_source">'+item.source_name+'<span class=noPic_time>'+time+'</span><span class="dislike"><i class="iconfont">&#xe60d;</i></span></div>'+
+                                    '<div class="noPic_source font13">'+item.source_name+'<span class=noPic_time>'+time+'</span><span class="dislike"><i class="iconfont">&#xe60d;</i></span></div>'+
                                     '</div></a></div>');
                             $('.feed-detail').append(list);
                          }else if(item.layout == '2'){//单小
                             list = $('<div class="onePic_container feed-detail-container"><a href="'+item.view_url+'">'+
                                      '<div class="onePic_left">'+
-                                     '<p class="onePic_text font15">'+item.title+'</p>'+
-                                     '<div class="onePic_active font12">'+
-                                     '<div class="onePic_source">'+item.source_name+'<span class=onePic_time>'+time+'</span><span class="dislike"><i class="iconfont">&#xe60d;</i></span></div>'+
+                                     '<p class="onePic_text font17">'+item.title+'</p>'+
+                                     '<div class="onePic_active font14">'+
+                                     '<div class="onePic_source font13">'+item.source_name+'<span class=onePic_time>'+time+'</span><span class="dislike"><i class="iconfont">&#xe60d;</i></span></div>'+
                                      '</div>'+
                                      '</div>'+
                                      '<div class="onePic_right">'+
@@ -284,15 +290,15 @@
                             $('.feed-detail').append(list);
                          }else if(item.layout == '3'){//单大
                             list = $('<div class="bigPic_container feed-detail-container"><a href="'+item.view_url+'">'+
-                                     '<p class="bigPic_text font15">'+item.title+'</p>'+
+                                     '<p class="bigPic_text font17">'+item.title+'</p>'+
                                      '<img src='+item.images[0]+' />'+
-                                     '<div class="bigPic_active font12">'+
-                                     '<div class="bigPic_source">'+item.source_name+'<span class=bigPic_time>'+time+'</span><span class="dislike"><i class="iconfont">&#xe60d;</i></span></div>'+
+                                     '<div class="bigPic_active font14">'+
+                                     '<div class="bigPic_source font13">'+item.source_name+'<span class=bigPic_time>'+time+'</span><span class="dislike"><i class="iconfont">&#xe60d;</i></span></div>'+
                                      '</div></a></div>');
                             $('.feed-detail').append(list);
                          }else if(item.layout == '4'){//三图
                             list = $('<div class="threePic_container feed-detail-container"><a href="'+item.view_url+'">'+
-                                     '<p class="threePic_text font15">'+item.title+'</p>'+
+                                     '<p class="threePic_text font17">'+item.title+'</p>'+
                                      '<div class="threePic_box">'+
                                         '<div class="threeImg">'+
                                             '<img src='+item.images[0]+' />'+
@@ -304,11 +310,13 @@
                                             '<img src='+item.images[2]+' />'+
                                         '</div>'+
                                      '</div>'+
-                                     '<div class="threePic_active font12">'+
-                                        '<div class="threePic_source">'+item.source_name+'<span class=threePic_time>'+time+'</span><span class="dislike"><i class="iconfont">&#xe60d;</i></span></div>'+
+                                     '<div class="threePic_active font14">'+
+                                        '<div class="threePic_source font13">'+item.source_name+'<span class=threePic_time>'+time+'</span><span class="dislike"><i class="iconfont">&#xe60d;</i></span></div>'+
                                      '</div></a></div>');
                             $('.feed-detail').append(list);
                             storage.feed['column'+storage.feed.show].data=$('.feed-detail').html();
+                            storage.feed['column'+storage.feed.show].load_cursor=d.data.time_param.load_cursor;
+                            storage.feed['column'+storage.feed.show].refresh_cursor=d.data.time_param.refresh_cursor;
                             getListFlag=true
                          }
                        })
@@ -320,12 +328,13 @@
              var activeUrl = 'https://xyh.botbrain.ai/we/act/list?start='+storage.active.st;
              var activeHtml ='';
              $.ajax({url:activeUrl,type:'post',dataType:"jsonp",success:function(d){
-                 d.data.data.map(function(item,idx){
+                 (d.data.data||[]).map(function(item,idx){
+                     var start = formatDateTime(item.actStrTime,'noyear'),end = formatDateTime(item.actEndTime,'noyear')
                       activeHtml = $('<div class="bigPic_container feed-detail-container">'+
                                '<a href="./active_detail.html?id='+item.id+'"><img src='+item.img_url+' /></a>'+
-                               '<p class="bigPic_text font15">'+item.name+'</p>'+
-                               '<div class="bigPic_active font12">'+
-                               '<div class="bigPic_source"><i class="iconfont">&#xe68f;</i> 活动时间：'+item.actTime+'</div>'+
+                               '<p class="bigPic_text font18">'+item.name+'</p>'+
+                               '<div class="bigPic_active font14">'+
+                               '<div class="bigPic_source"><i class="iconfont">&#xe68f;</i> 活动时间：'+start+' ~ '+end+'</div>'+
                                '<div class="bigPic_source"><i class="iconfont">&#xe6c3;</i> 活动地点：'+item.actAddr+'</div>'+
                                '</div></div>');
                       $('.active-detail').append(activeHtml);
@@ -333,10 +342,10 @@
                  if(d.data.data.length<10){
                      storage.active.all=true;//已经全部加载完
                      if(d.data.data.length==0&&storage.active.st==1){//第一次加载且数据为空时
-                           activeHtml = $('<div class="bigPic_container feed-detail-container">'+
+                           activeHtml = $('<div class="bigPic_container feed-detail-container no-content">'+
                                     '<img src="./assets/img/null.png" />'+
                                     '<div class="bigPic_active font12">'+
-                                    '<div class="bigPic_source" style="text-align: center">暂无活动</div>'+
+                                    '<div class="bigPic_source" style="text-align: center">暂无活动~</div>'+
                                     '</div></div>');
                            $('.active-detail').append(activeHtml);
                      }

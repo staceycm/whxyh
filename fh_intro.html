@@ -21,7 +21,7 @@
         </div>
         <div class="fh-word">
             <h3>老校友会</h3>
-            <p>分会简介分会简介分会简介分会简介分会简介分会简介分会简介</p>
+            <p class="">分会简介分会简介分会简介分会简介分会简介分会简介分会简介分会简介分会简介分会简介分会简介分会简介分会简介分会简介分会简介分会简介分会简介分会简介分会简介分会简介分会简介分会简介分会简介分会简介分会简介分会简介分会简介分会简介</p>
             <button class="act-btn">加入分会</button>
         </div>
         <div class="active-panel" style="height: auto;display: block;">
@@ -84,10 +84,27 @@
                  console.log(d);
                  $('.fh-word h3').html(d.data.fh_name);
                  $('.fh-word p').html(d.data.fh_abstract);
+                 var h = $('.fh-word p').height();
+                 if(h>82.4){//如果高度大于四行 显示折行 并且显示点击展开按钮
+                     $('.fh-word p').addClass('text-hidden')
+                     $('.fh-word p').after('<i class="iconfont icon-arrowdown"></i>')
+                 }
+                 //展开分会简介
+                 $('.fh-word').on('click',function(e){
+                     var $target = $(e.target)
+                     if($target.is('.icon-arrowdown')){
+                        $('.fh-word p').removeClass('text-hidden')
+                        $target.removeClass('icon-arrowdown').addClass('icon-arrow_up')
+                     }else if($target.is('.icon-arrow_up')){
+                         $('.fh-word p').addClass('text-hidden')
+                         $target.removeClass('icon-arrow_up').addClass('icon-arrowdown')
+                      }
+                 })
                  //判断加入或退出
                  $('.fh-word .act-btn').data('state',d.data.state)
                  if(d.data.state==1){//已加入分会
-                    $('.fh-word .act-btn').hide();
+                    // $('.fh-word .act-btn').hide();
+                    $('.fh-word .act-btn').addClass('used').html('已加入分会');
                  }else if(d.data.state==2){//已加入分会三个月
                     $('.fh-word .act-btn').html('退出分会');
                  }//0为未加入分会 什么也不需要做
@@ -111,38 +128,16 @@
                  if(d.data.data.length<10){
                       storage.all=true;//已经全部加载完
                       if(d.data.data.length==0&&storage.start==1){//第一次加载且数据为空时
-                          activeHtml = $('<div class="bigPic_container feed-detail-container">'+
+                          activeHtml = $('<div class="bigPic_container feed-detail-container no-content">'+
                                    '<img src="./assets/img/null.png" />'+
                                    '<div class="bigPic_active font12">'+
-                                   '<div class="bigPic_source" style="text-align: center">暂无活动</div>'+
+                                   '<div class="bigPic_source" style="text-align: center">暂无活动~</div>'+
                                    '</div></div>');
                           $('.active-detail').append(activeHtml);
                       }
                  }
              }})
          }
-         //提示弹窗toast
-         function bb_toast(content){
-               var $toast = $('#toast');
-               $toast.find('.weui-toast__content').text(content || "已完成");
-               if ($toast.css('display') != 'none') {
-                 return;
-               }
-               $toast.fadeIn(100);
-               setTimeout(function () {
-                   $toast.fadeOut(100);
-               }, 2000);
-             }
-         //提示弹窗 alert
-         function bb_alert(content, btn){
-               var $dialog = $('#dlg_alert');
-               $dialog.fadeIn(200);
-               $dialog.find('.weui-dialog__bd').text(content);
-               $dialog.find('.weui-dialog__btn_primary').text(btn || "知道了");
-               $dialog.find('.weui-dialog__btn').one('click', function () {
-                   $dialog.fadeOut(200);
-               });
-             }
          getLunbo();
          getIntro();
          getActive();
@@ -155,7 +150,8 @@
                    $.post(actUrl, { fh_id: param.id },function(data){
                           if(data.code==0){
                                 bb_toast('加入成功')
-                                $('.fh-word .act-btn').data('state',1).hide();
+                                // $('.fh-word .act-btn').data('state',1).hide();
+                                $('.fh-word .act-btn').data('state',1).addClass('used').html('已加入分会');
                           }else{
                               bb_alert("加入分会失败，请稍后重试");
                           }
