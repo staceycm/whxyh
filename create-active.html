@@ -150,6 +150,7 @@ $(function(){
 
     //所有分会列表获取
     function getFenHui(){
+            // var mock={"code":0,"msg":"请求成功","data":[{"id":106668,"fh_name":"老校友会","jc_name":"老校友会","xy_name":null,"fh_abstract":null,"update_time":null,"state":0,"checkboxed":1},{"id":106669,"fh_name":"经济与管理分会","jc_name":"经管分会","xy_name":null,"fh_abstract":null,"update_time":null,"state":0,"checkboxed":0},{"id":106670,"fh_name":"法学分会","jc_name":"法学分会","xy_name":null,"fh_abstract":null,"update_time":null,"state":0,"checkboxed":0},{"id":106671,"fh_name":"文学分会","jc_name":"文学分会","xy_name":null,"fh_abstract":null,"update_time":null,"state":0,"checkboxed":0},{"id":106672,"fh_name":"测绘分会","jc_name":"测绘分会","xy_name":null,"fh_abstract":null,"update_time":null,"state":0,"checkboxed":0},{"id":106673,"fh_name":"水利电力分会","jc_name":"水电分会","xy_name":null,"fh_abstract":null,"update_time":null,"state":0,"checkboxed":0},{"id":106674,"fh_name":"政治与公共管理分会","jc_name":"政管分会","xy_name":null,"fh_abstract":null,"update_time":null,"state":0,"checkboxed":0},{"id":106675,"fh_name":"校友企业家联谊会环渤海分会","jc_name":"环渤海分会","xy_name":null,"fh_abstract":null,"update_time":null,"state":0,"checkboxed":0},{"id":106676,"fh_name":"武汉大学北京研究生联谊会","jc_name":"北京研究生联谊会","xy_name":null,"fh_abstract":null,"update_time":null,"state":0,"checkboxed":0},{"id":106677,"fh_name":"医学分会","jc_name":"医学分会","xy_name":null,"fh_abstract":null,"update_time":null,"state":0,"checkboxed":0},{"id":106678,"fh_name":"互联网AI分会","jc_name":"互联网AI分会","xy_name":null,"fh_abstract":null,"update_time":null,"state":0,"checkboxed":0},{"id":106679,"fh_name":"信息管理分会","jc_name":"信管分会","xy_name":null,"fh_abstract":null,"update_time":null,"state":0,"checkboxed":0},{"id":106680,"fh_name":"传媒分会","jc_name":"传媒分会","xy_name":null,"fh_abstract":null,"update_time":null,"state":0,"checkboxed":0},{"id":106681,"fh_name":"化学分会","jc_name":"化学分会","xy_name":null,"fh_abstract":null,"update_time":null,"state":0,"checkboxed":0},{"id":106682,"fh_name":"物理电信分会","jc_name":"物理电信分会","xy_name":null,"fh_abstract":null,"update_time":null,"state":0,"checkboxed":0},{"id":106683,"fh_name":"外语学院分会","jc_name":"外语分会","xy_name":null,"fh_abstract":null,"update_time":null,"state":0,"checkboxed":0},{"id":106684,"fh_name":"历史分会","jc_name":"历史分会","xy_name":null,"fh_abstract":null,"update_time":null,"state":0,"checkboxed":0},{"id":106685,"fh_name":"艺术学院分会","jc_name":"艺术分会","xy_name":null,"fh_abstract":null,"update_time":null,"state":0,"checkboxed":0},{"id":106686,"fh_name":"城市设计分会","jc_name":"城设分会","xy_name":null,"fh_abstract":null,"update_time":null,"state":0,"checkboxed":0},{"id":106843,"fh_name":"哲学分会","jc_name":"哲学分会","xy_name":null,"fh_abstract":null,"update_time":null,"state":0,"checkboxed":0},{"id":106901,"fh_name":"马院分会","jc_name":"马院分会","xy_name":null,"fh_abstract":null,"update_time":null,"state":0,"checkboxed":0}],"cost":0}
           var fhUrl = 'https://xyh.botbrain.ai/we/admin/getCha'
           if(type=='edit'){fhUrl='https://xyh.botbrain.ai/we/admin/getCha?act_id=fxy2017'}//用el替换
           var fhIdStr='';//发布页面的活动分会默认值
@@ -157,9 +158,9 @@ $(function(){
           $.ajax({url:fhUrl,type:'post',dataType:"jsonp",success:
                function(d){
                     if(d.code==0){
-                        d.data.forEach(function(item,idx){
+                        mock.data.forEach(function(item,idx){
                             var firstLeter = item.jc_name.substr(0,1);
-                            var className='',checked=false
+                            var className='',checked=""
                             fhData[item.id]={};
                             fhData[item.id].id=item.id;
                             fhData[item.id].jc_name= item.jc_name;
@@ -171,14 +172,14 @@ $(function(){
                                     className='default';//分会管理员默认的活动分会 不可移除 总会管理员默认全部分会 可移除 但至少选择一个
                                     clickHtml = 'onclick="return false;"'
                                 }
-                                checked=true
+                                checked="checked"
                             }else if(item.checkboxed==2){
-                                checked=true
+                                checked="checked"
                             }
                             fhHtml+='<li >'+
                                      '    <div class="tool-checkbox '+className+'">\n'+
                                      '        <span>\n'+
-                                     '            <input type="checkbox" name="fh-item" id="'+item.id+'" data-fhid="'+item.id+'" class="input-checkbox" '+clickHtml+' checked='+checked+' >\n'+
+                                     '            <input type="checkbox" name="fh-item" id="'+item.id+'" data-fhid="'+item.id+'" class="input-checkbox" '+clickHtml+' '+checked+' >\n'+
                                      '            <label for="'+item.id+'"></label>\n'+
                                      '        </span>\n'+
                                      '        <span class="first-word" style="background: '+colArr[idx]+'">'+firstLeter+'</span>\n'+

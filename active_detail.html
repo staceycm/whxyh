@@ -103,10 +103,11 @@
                      if(d.data.regExpTime<=timestamp){//报名时间已经过了 自定义属性change变为0 表示文案不再可调整
                         $('#btn_join').addClass('weui-btn_lose').data('change',0).html('报名已截止');
                         //已报名列表 如果已经过了报名截止时间 则不需要显示列表
-                        $('.registered-list-wrap').hide()
-                     }else{
-                        getRegList(1)//第一次请求
+                        // $('.registered-list-wrap').hide()
                      }
+                     // else{
+                        getRegList(1)//第一次请求
+                     // }
                  }
              }})
          }
