@@ -49,7 +49,37 @@
                     </div>
                 </div>
                 <div class="active-detail">
-                    <!--<div class="weui-panel weui-panel_access line-wrapper">
+                    <div class="weui-panel weui-panel_access no-line-scroll">
+                        <div class="weui-panel__bd">
+                            <div class="active-show">
+                                <a href="javascript:;" style="display:inline-block">
+                                    <div class="weui-media-box weui-media-box_text">
+                                        <h4 class="weui-media-box__title"><span>本分会</span>武汉大学北京校友聚会</h4>
+                                         <p class="weui-media-box__desc">
+                                             <img src="assets/img/wuda.png" alt="">
+                                             <span>活动时间： 2014-09-09 </br>活动地点：这里</span>
+                                         </p>
+                                    </div>
+                                </a>
+                                <div class="registered-list-wrap">
+                                    <ul class="registered-list">
+                                        <li><a href="javascript:;"><img src="assets/img/logo.jpg" alt=""></a></li>
+                                        <li><a href="javascript:;"><img src="assets/img/logo.jpg" alt=""></a></li>
+                                        <li><a href="javascript:;"><img src="assets/img/logo.jpg" alt=""></a></li>
+                                        <li><a href="javascript:;"><img src="assets/img/logo.jpg" alt=""></a></li>
+                                        <li><a href="javascript:;"><img src="assets/img/logo.jpg" alt=""></a></li>
+                                        <li><a href="javascript:;"><i class="iconfont">&#xe608;</i></a></li>
+                                    </ul>
+                                    <p><span>3</span>个校友已经报名参加 &gt;</p>
+                                </div>
+                                <div class="weui-cell">
+                                    <div class="weui-cell__bd">向校友会成员发送活动通知</div>
+                                    <div class="weui-cell__ft"><a id="btn_copy_mobile" href="javascript:;" class="weui-btn_plain-primary">发送</a></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="weui-panel weui-panel_access line-wrapper">
                         <div class="weui-panel__bd line-scroll-wrapper">
                             <div class="active-show line-normal-wrapper">
                                 <a href="javascript:;" style="display:inline-block">
@@ -91,48 +121,6 @@
                             </div>
                         </div>
                     </div>
-                    <div class="weui-panel weui-panel_access line-wrapper">
-                                            <div class="weui-panel__bd line-scroll-wrapper">
-                                                <div class="active-show line-normal-wrapper">
-                                                    <a href="javascript:;" style="display:inline-block">
-                                                        <div class="weui-media-box weui-media-box_text">
-                                                            <h4 class="weui-media-box__title">武汉大学北京校友聚会</h4>
-                                                             <p class="weui-media-box__desc">
-                                                                 <img src="assets/img/wuda.png" alt="">
-                                                                 <span>活动时间： 2014-09-09 </br>活动地点：这里</span>
-                                                             </p>
-                                                        </div>
-                                                    </a>
-                                                    <div class="registered-list-wrap">
-                                                        <ul class="registered-list">
-                                                            <li><a href="javascript:;"><img src="assets/img/logo.jpg" alt=""></a></li>
-                                                            <li><a href="javascript:;"><img src="assets/img/logo.jpg" alt=""></a></li>
-                                                            <li><a href="javascript:;"><img src="assets/img/logo.jpg" alt=""></a></li>
-                                                            <li><a href="javascript:;"><img src="assets/img/logo.jpg" alt=""></a></li>
-                                                            <li><a href="javascript:;"><img src="assets/img/logo.jpg" alt=""></a></li>
-                                                            <li><a href="javascript:;"><i class="iconfont">&#xe608;</i></a></li>
-                                                        </ul>
-                                                        <p><span>3</span>个校友已经报名参加 &gt;</p>
-                                                    </div>
-                                                    <div class="weui-cell">
-                                                        <div class="weui-cell__bd">向校友会成员发送活动通知</div>
-                                                        <div class="weui-cell__ft"><a id="btn_copy_mobile" href="javascript:;" class="weui-btn_plain-primary">发送</a></div>
-                                                    </div>
-                                                </div>
-                                                <div class="active-handler line-btn-delete">
-                                                    <ul>
-                                                        <li class="active-edit">
-                                                            <span><i class="iconfont">&#xe6c5;</i></span>
-                                                            <p>编辑</p>
-                                                        </li>
-                                                        <li class="active-del">
-                                                            <span><i class="iconfont">&#xe62a;</i></span>
-                                                            <p>删除</p>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>-->
                 </div>
             </div>
         </div>
@@ -187,33 +175,52 @@
                             }
                             pushHtml+='</div>';
                         }
-                        activeHtml+='<div class="weui-panel weui-panel_access line-wrapper">\n'+
-                             '       <div class="weui-panel__bd line-scroll-wrapper">\n'+
-                             '           <div class="active-show line-normal-wrapper">\n'+
-                             '               <a href="javascript:;" style="display:inline-block">\n'+
-                             '                   <div class="weui-media-box weui-media-box_text">\n'+
-                             '                       <h4 class="weui-media-box__title">'+item.name+'</h4>\n'+
-                             '                       <p class="weui-media-box__desc">\n'+
-                             '                           <img src="'+item.img_url+'" alt="">\n'+
-                             '                           <span>活动时间：'+start+' ~ '+end+'</br>活动地点：'+item.actAddr+'</span>\n'+
-                             '                       </p>\n'+
-                             '                   </div>\n'+
-                             '               </a>\n'+personHtml+pushHtml+
-                             '           </div>\n'+
-                             '           <div class="active-handler line-btn-delete">\n'+
-                             '               <ul>\n'+
-                             '                   <li class="active-edit" data-activeid='+item.id+'><a href="#none">\n'+
-                             '                       <span><i class="iconfont">&#xe6c5;</i></span>\n'+
-                             '                       <p>编辑</p></a>\n'+
-                             '                   </li>\n'+
-                             '                   <li class="active-del" data-activeid='+item.id+'><a href="#none">\n'+
-                             '                       <span><i class="iconfont">&#xe62a;</i></span>\n'+
-                             '                       <p>删除</p></a>\n'+
-                             '                   </li>\n'+
-                             '               </ul>\n'+
-                             '           </div>\n'+
-                             '       </div>\n'+
-                             '   </div>'
+                        if(item.ed_dl==1){//1 属于本分会的活动可编辑 0 属于其他分会的活动不可编辑
+                            activeHtml+='<div class="weui-panel weui-panel_access line-wrapper">\n'+
+                                     '       <div class="weui-panel__bd line-scroll-wrapper">\n'+
+                                     '           <div class="active-show line-normal-wrapper">\n'+
+                                     '               <a href="javascript:;" style="display:inline-block">\n'+
+                                     '                   <div class="weui-media-box weui-media-box_text">\n'+
+                                     '                       <h4 class="weui-media-box__title">'+item.name+'</h4>\n'+
+                                     '                       <p class="weui-media-box__desc">\n'+
+                                     '                           <img src="'+item.img_url+'" alt="">\n'+
+                                     '                           <span>活动时间：'+start+' ~ '+end+'</br>活动地点：'+item.actAddr+'</span>\n'+
+                                     '                       </p>\n'+
+                                     '                   </div>\n'+
+                                     '               </a>\n'+personHtml+pushHtml+
+                                     '           </div>\n'+
+                                     '           <div class="active-handler line-btn-delete">\n'+
+                                     '               <ul>\n'+
+                                     '                   <li class="active-edit" data-activeid='+item.id+'><a href="#none">\n'+
+                                     '                       <span><i class="iconfont">&#xe6c5;</i></span>\n'+
+                                     '                       <p>编辑</p></a>\n'+
+                                     '                   </li>\n'+
+                                     '                   <li class="active-del" data-activeid='+item.id+'><a href="#none">\n'+
+                                     '                       <span><i class="iconfont">&#xe62a;</i></span>\n'+
+                                     '                       <p>删除</p></a>\n'+
+                                     '                   </li>\n'+
+                                     '               </ul>\n'+
+                                     '           </div>\n'+
+                                     '       </div>\n'+
+                                     '   </div>'
+                        }else{
+                            activeHtml+='<div class="weui-panel weui-panel_access no-line-scroll">\n'+
+                                     '       <div class="weui-panel__bd">\n'+
+                                     '           <div class="active-show">\n'+
+                                     '               <a href="javascript:;" style="display:inline-block">\n'+
+                                     '                   <div class="weui-media-box weui-media-box_text">\n'+
+                                     '                       <h4 class="weui-media-box__title"><span>本分会</span>'+item.name+'</h4>\n'+
+                                     '                       <p class="weui-media-box__desc">\n'+
+                                     '                           <img src="'+item.img_url+'" alt="">\n'+
+                                     '                           <span>活动时间：'+start+' ~ '+end+'</br>活动地点：'+item.actAddr+'</span>\n'+
+                                     '                       </p>\n'+
+                                     '                   </div>\n'+
+                                     '               </a>\n'+personHtml+pushHtml+
+                                     '           </div>\n'+
+                                     '       </div>\n'+
+                                     '   </div>'
+                        }
+
                          })
                     if(d.data.length<10){//如果请求返回数据少于10 说明已经没有更多数据
                         storage[state].all=true;
@@ -310,8 +317,8 @@
             if($target.is('.active-del')||$target.is('.active-del i')||$target.is('.active-del p')||$target.is('.active-del span')||$target.is('.active-del a')){
                 bb_confirm("删除活动", "确认删除1个活动吗？", "放弃", "确定", function(wc){
                     if(wc == "right"){
-                        // $.post('https://xyh.botbrain.ai/we/admin/del_fh_act', { act_id: id },function(data){
-                        //     if(data.code==0){
+                        $.post('https://xyh.botbrain.ai/we/admin/del_fh_act', { act_id: id },function(data){
+                            if(data.code==0){
                                 $target.parents('.weui-panel').fadeOut().remove();
                                 storage[state].data=$('.active-detail').html();
                                 if($('.active-detail .weui-panel').length<4){//少于四条数据时 继续请求数据
@@ -319,15 +326,14 @@
                                             storage.start+=1
                                             getActive()
                                         }
+                                    }
+                                }else{
+                                 bb_alert(data.msg);
                                 }
-                            // }else{
-                            //      bb_alert(data.msg);
-                            // }
-                       // }
-                       // );
-                    }
-                });
-            }
+                           });
+                        }
+                    });
+                }
             if($target.is('.push')){
                 $.post('https://xyh.botbrain.ai/we/act/add_new', { act_id: id },function(data){
                     if(data.code==0){
