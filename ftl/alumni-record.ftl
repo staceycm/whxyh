@@ -3,12 +3,12 @@
 <head>
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" charset="utf-8">
     <title>校友录</title>
-    <link rel="stylesheet" type="text/css" href="assets/css/custom.css">
-    <link rel="stylesheet" type="text/css" href="assets/css/weui.css">
-    <link rel="stylesheet" type="text/css" href="assets/css/w-reset.css">
-    <link rel="stylesheet" type="text/css" href="assets/font/iconfont.css">
-    <script src="assets/js/jquery-3.1.1.min.js"></script>
-    <script src="assets/js/base.js"></script>
+    <link rel="stylesheet" type="text/css" href="${req.contextPath}/assets/css/custom.css">
+    <link rel="stylesheet" type="text/css" href="${req.contextPath}/assets/css/weui.css">
+    <link rel="stylesheet" type="text/css" href="${req.contextPath}/assets/css/w-reset.css">
+    <link rel="stylesheet" type="text/css" href="${req.contextPath}/assets/font/iconfont.css">
+    <script src="${req.contextPath}/assets/js/jquery-3.1.1.min.js"></script>
+    <script src="${req.contextPath}/assets/js/base.js"></script>
 </head>
 <body style="background: #FFFFFF">
     <div class="page_bd page-alumni-record">
@@ -72,23 +72,23 @@
             </div>
         </div>-->
         <div class="weui-tabbar" style="position: fixed">
-            <a href="javascript:;" class="weui-tabbar__item">
+            <a href="${req.contextPath}/we/h5/home" class="weui-tabbar__item">
                 <span style="display: inline-block;position: relative;">
-                    <img src="assets/img/schoolmate.png" alt="" class="weui-tabbar__icon">
+                    <img src="${req.contextPath}/assets/img/schoolmate.png" alt="" class="weui-tabbar__icon">
                     <span class="weui-badge" style="position: absolute;top: -2px;right: -13px;">8</span>
                 </span>
                 <p class="weui-tabbar__label">校友会</p>
             </a>
             <a href="javascript:;" class="weui-tabbar__item weui-bar__item_on">
                 <span style="display: inline-block;position: relative;">
-                    <img src="assets/img/schoolbook-click.png" alt="" class="weui-tabbar__icon">
+                    <img src="${req.contextPath}/assets/img/schoolbook-click.png" alt="" class="weui-tabbar__icon">
                     <span class="weui-badge weui-badge_dot" style="position: absolute;top: 0;right: -6px;"></span>
                 </span>
                 <p class="weui-tabbar__label">校友录</p>
             </a>
-            <a href="javascript:;" class="weui-tabbar__item">
+            <a href="${req.contextPath}/we/h5/my/index" class="weui-tabbar__item">
                 <span style="display: inline-block;position: relative;">
-                    <img src="assets/img/my.png" alt="" class="weui-tabbar__icon">
+                    <img src="${req.contextPath}/assets/img/my.png" alt="" class="weui-tabbar__icon">
                 </span>
                 <p class="weui-tabbar__label">我的</p>
             </a>
@@ -189,14 +189,6 @@
             //         $searchResult.hide();
             //     }
             // });
-        // $searchClear.on('click', function(){
-        //     hideSearchResult();
-        //     $searchInput.focus();
-        // });
-        // $searchCancel.on('click', function(){
-        //     cancelSearch();
-        //     $searchInput.blur();
-        // });
         //1970年至今遍历
         function getYearSelect(){
             var date = new Date();
@@ -209,9 +201,9 @@
         }
         //获取学院列表
         function getXySelect(){
-            var xyUrl = 'https://xyh.botbrain.ai/we/xy/xy_list';
+            var xyUrl = '${req.contextPath}/we/xy/xy_list';
             var xyHtml='';
-            $.ajax({url:xyUrl,type:'post',dataType:"jsonp",success:
+            $.ajax({url:xyUrl,type:'post',success:
                 function(d){
                     d.data.forEach(function(item,idx){
                         xyHtml+='<option value="'+item+'" >'+item+'</option>';
@@ -222,9 +214,9 @@
         }
         //获取分会列表
         function getFhSelect(){
-             var fhUrl = 'https://xyh.botbrain.ai/we/cap/getCha'
+             var fhUrl = '${req.contextPath}/we/cap/getCha'
              var fhHtml='';
-             $.ajax({url:fhUrl,type:'post',dataType:"jsonp",success:
+             $.ajax({url:fhUrl,type:'post',success:
                 function(d){
                     d.data.forEach(function(item,idx){
                         fhHtml+='<option value="'+item.id+'" >'+item.jc_name+'</option>';
@@ -235,9 +227,9 @@
         }
         //获取校友列表
         function getAlumniList(type){
-            var alumniUrl = 'https://xyh.botbrain.ai/we/xy/findxy_list?kw='+param.kw+'&xyYear='+param.xyYear+'&xyName='+param.xyName+'&fh_id='+param.fh_id+'&start='+param.start;
+            var alumniUrl = '${req.contextPath}/we/xy/findxy_list?kw='+encodeURI(encodeURI(param.kw))+'&xyYear='+param.xyYear+'&xyName='+encodeURI(encodeURI(param.xyName))+'&fh_id='+param.fh_id+'&start='+param.start;
             var alumniHtml=''
-            $.ajax({url:alumniUrl,type:'post',dataType:"jsonp",success:
+            $.ajax({url:alumniUrl,type:'post',success:
                 function(d){
                     if(d.code==0){
                         $('.alumni-count').find('span').html(d.data.num);
@@ -251,7 +243,7 @@
                             if(item.xyAcademy2!=null){
                                 xyAcademy2Html='    <p class="weui-media-box__desc" style="padding-bottom:6px;">'+item.xyAcademy2+'-'+item.xyType2+'</p>';
                             }
-                            var headImg=d.data.sex=='女'?"assets/img/f-user.png":"/assets/img/m-user.png";
+                            var headImg=d.data.sex=='女'?"${req.contextPath}/assets/img/f-user.png":"${req.contextPath}//assets/img/m-user.png";
                             if(item.headImgUrl && item.headImgUrl!==""){
                                 headImg=item.headImgUrl
                             }
@@ -273,7 +265,7 @@
                              param.all=true;//已经全部加载完
                              if(d.data.xy_list.length==0&&param.start==1){//第一次加载或搜索且数据为空时
                                    alumniHtml = $('<div class="bigPic_container feed-detail-container no-content">'+
-                                            '<img src="./assets/img/null.png" />'+
+                                            '<img src="${req.contextPath}/assets/img/null.png" />'+
                                             '<div class="bigPic_active font12">'+
                                             '<div class="bigPic_source" style="text-align: center">暂无数据~</div>'+
                                             '</div></div>');
@@ -307,15 +299,15 @@
                     $(e.target).addClass('icon-cc-heart').removeClass('icon-cc-heart-o');//收藏
                     state=0
                 }
-                var daCallUrl = 'https://xyh.botbrain.ai/we/cap/add';
+                var daCallUrl = '${req.contextPath}/we/xy/collect';
                 openId = $(e.target).parent().data('openid');
-                $.post(daCallUrl, { xy_openId: openId,state:state },function(d){
+                $.post(daCallUrl, {xy_openId:openId,state:state },function(d){
                     if(d.code==0){
-                       bb_toast(d.msg)
+                        bb_toast(data.msg)
                     }
                  });
             }else if($(e.target).is('.icon-send-msg')){
-                openId = $(e.target).parent().data('openId');
+                openId = $(e.target).parent().data('openid');
                 var name = $(e.target).parent().data('name');
                 sendSms(openId,name)
             }
@@ -346,9 +338,12 @@
                     bb_toast("留言内容不能为空");
                     return;
             	}
-            	$.post("https://xyh.botbrain.ai/we/leaveMsg", {"toOpenId": openId, "msg":$txt.val()}, function(d){
-            		bb_toast(d.msg);
+            	$.post("${req.contextPath}/we/leaveMsg", {"toOpenId": openId, "msg":$txt.val()}, function(d){
             		if(d.code==0){
+                        bb_toast(d.msg);
+            			$dialog.fadeOut(200);
+            		} else {
+            		    bb_toast(d.msg);
             			$dialog.fadeOut(200);
             		}
             	});
@@ -357,7 +352,8 @@
 
         //下拉监听
         $(document).scroll(function(){
-             if($(document).height() - $(document).scrollTop() - window.innerHeight <100 ){
+             if($(document).height() - $(document).scrollTop() - window.innerHeight <100 )
+             {
                  if(!param.all) {
                      param.start+=1;
                      getAlumniList('add');

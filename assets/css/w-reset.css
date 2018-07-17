@@ -248,6 +248,9 @@
     text-align: center;
     box-shadow: 0 2px 15px 0 rgba(0,0,0,0.10);
 }
+.intro-word p{
+    text-align: left;
+}
 .intro-word .intro-word-title,.intro-frame .intro-frame-title{
     line-height: 30px;
     border-bottom: 1px solid #30a9ff;
@@ -555,9 +558,10 @@
     overflow: hidden;
 }
 .threePic_container .threeImg {
-     width: 31%;
-     float: left;
-     padding: 0 4px;
+    width: 33%;
+    float: left;
+    padding: 0 4px;
+    box-sizing: border-box;
  }
 .threePic_container .threeImg img{
     width: 100%;
@@ -609,24 +613,17 @@
 .fh-word p{
     font-size: 14px;
     line-height: 21px;
-}
-.fh-word p.text-hidden{
-    text-align: justify;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 4;
+    text-align: left;
 }
 .fh-word .act-btn{
     margin-top: 12px;
-    width: 90px;
+    width: 100px;
     background-color: #30a9ff;
     font-size: 14px;
     text-align: center;
     color: #FFFFFF;
-    line-height: 24px;
-    height: 24px;
+    line-height: 36px;
+    height: 36px;
     border-radius: 5px;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     overflow: hidden;
@@ -1110,9 +1107,11 @@
     overflow: hidden;
     background:#f3f5f8;
 }
-
+.page-active-manage .active-detail{
+    background:#f3f5f8;
+}
 .page-active-manage .weui-panel:first-child{
-    margin-top: 10px;
+    margin-top: 15px;
 }
 .page-active-manage .weui-panel .weui-panel__bd{
     /*clear: both;*/
@@ -1122,6 +1121,9 @@
 .page-active-manage .weui-panel .weui-panel__bd .active-show{
     float: left;
     background: #FFFFFF;
+}
+.page-active-manage .weui-panel.no-line-scroll .weui-panel__bd .active-show{
+    width: 100%;
 }
 .page-active-manage .weui-panel .weui-panel__bd .active-show>a{
     display:inline-block;
@@ -1139,6 +1141,14 @@
     white-space: normal;
     text-overflow: inherit;
     font-size: 16px;
+}
+.page-active-manage .weui-media-box__title span{
+    background: #FFB01F;
+    border-radius: 20px;
+    color: #fff;
+    font-size: 12px;
+    padding: 1px 4px;
+    margin-right: 5px;
 }
 .page-active-manage .weui-media-box__desc img{
     margin-right: 6px;
@@ -1310,4 +1320,55 @@
     text-align: center;
     font-size: 18px;
 }
-
+/*我的校友*/
+.page-my-alumni .weui-navigator-list{
+    background: #ffffff;
+    width: 100%;
+    position: fixed;
+    top: 0;
+}
+.page-my-alumni .weui-navigator-list li{
+    width: 50%
+}
+.page-my-alumni .weui-navigator-list  a{
+    color: #666666;
+    padding: 4px 15px;
+    width: 50%;
+    margin: 0 auto;
+}
+.page-my-alumni .weui-navigator-list li.active a{
+    color: #17aff8;
+    border-bottom: 2px solid #17aff8;
+}
+.page-my-alumni .alumni-list{
+    background: #FFFFFF;
+    padding-top: 50px;
+    display: none;
+}
+.page-my-alumni .alumni-list.active{
+    display: block;
+}
+.page-my-alumni .alumni-list .weui-media-box{
+    margin: 15px;
+    padding: 10px;
+    box-shadow: 0 0 12px 0 rgba(0,0,0,0.08);
+    border-radius: 8px;
+}
+.page-my-alumni .alumni-list .weui-media-box__title b{
+    color: #333333;
+    font-size: 15px;
+    font-weight: bold;
+}
+.page-my-alumni .alumni-list .weui-media-box__title span{
+    float: right;
+    margin-right: 10px;
+}
+.page-my-alumni .alumni-list .weui-media-box__title span i{
+    display: inline-block;
+    width: 30px;
+    text-align: center;
+    color: #333333;
+}
+.page-my-alumni .alumni-list .weui-media-box__title span i.icon-cc-heart{
+    color: #f74f51;
+}

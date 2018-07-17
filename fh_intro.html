@@ -50,6 +50,19 @@
       </div>
     </div>
     <!--END dlg_alert-->
+    <!--BEGIN dlg_confirm-->
+        <div id="dlg_confirm" style="display: none;">
+          <div class="weui-mask"></div>
+          <div class="weui-dialog">
+            <div class="weui-dialog__hd"><strong class="weui-dialog__title">弹窗标题</strong></div>
+            <div class="weui-dialog__bd">弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内</div>
+            <div class="weui-dialog__ft">
+                <a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_default">辅助操作</a>
+                <a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_primary">主操作</a>
+            </div>
+          </div>
+        </div>
+        <!--END dlg_confirm-->
     <script>
      $(function(){
          var storage={start:1,all:false}
@@ -83,23 +96,7 @@
              $.ajax({url:introUrl,type:'post',dataType:"jsonp",success:function(d){
                  console.log(d);
                  $('.fh-word h3').html(d.data.fh_name);
-                 $('.fh-word p').html(d.data.fh_abstract);
-                 var h = $('.fh-word p').height();
-                 if(h>82.4){//如果高度大于四行 显示折行 并且显示点击展开按钮
-                     $('.fh-word p').addClass('text-hidden')
-                     $('.fh-word p').after('<i class="iconfont icon-arrowdown"></i>')
-                 }
-                 //展开分会简介
-                 $('.fh-word').on('click',function(e){
-                     var $target = $(e.target)
-                     if($target.is('.icon-arrowdown')){
-                        $('.fh-word p').removeClass('text-hidden')
-                        $target.removeClass('icon-arrowdown').addClass('icon-arrow_up')
-                     }else if($target.is('.icon-arrow_up')){
-                         $('.fh-word p').addClass('text-hidden')
-                         $target.removeClass('icon-arrow_up').addClass('icon-arrowdown')
-                      }
-                 })
+                 $('.fh-word p').html(d.data.fh_abstract.replace(/(\r\n)|(\n)/g,'<br>'));
                  //判断加入或退出
                  $('.fh-word .act-btn').data('state',d.data.state)
                  if(d.data.state==1){//已加入分会
@@ -148,26 +145,29 @@
               if(state==0){//未加入分会
                    actUrl = 'https://xyh.botbrain.ai/we/cap/add'
                    $.post(actUrl, { fh_id: param.id },function(data){
-                          if(data.code==0){
-                                bb_toast('加入成功')
-                                // $('.fh-word .act-btn').data('state',1).hide();
-                                $('.fh-word .act-btn').data('state',1).addClass('used').html('已加入分会');
-                          }else{
-                              bb_alert("加入分会失败，请稍后重试");
-                          }
-                     });
-              }else if(state==2){//已加入三个月
-                  actUrl = 'https://xyh.botbrain.ai/we/cap/del'
-                  $.post(actUrl, { fh_id: param.id },function(data){
                         if(data.code==0){
-                              bb_toast('退出成功')
-                              $('.fh-word .act-btn').data('state',0).html('加入分会')
+                             bb_toast('加入成功')
+                             // $('.fh-word .act-btn').data('state',1).hide();
+                             $('.fh-word .act-btn').data('state',1).addClass('used').html('已加入分会');
                         }else{
-                            bb_alert("退出分会失败，请稍后重试");
+                             bb_alert("加入分会失败，请稍后重试");
+                        }
+                   });
+              }else if(state==2){//已加入三个月
+                   bb_confirm("退出分会", "确认退出该分会吗？", "放弃", "确定", function(wc){
+                        if(wc == "right"){
+                             actUrl = 'https://xyh.botbrain.ai/we/cap/del'
+                             $.post(actUrl, { fh_id: param.id },function(data){
+                                  if(data.code==0){
+                                        bb_toast('退出成功')
+                                        $('.fh-word .act-btn').data('state',0).html('加入分会')
+                                  }else{
+                                      bb_alert("退出分会失败，请稍后重试");
+                                  }
+                             });
                         }
                    });
               }
-
          })
          $(document).scroll(function()
          {
