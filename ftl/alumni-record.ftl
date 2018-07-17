@@ -237,7 +237,7 @@
                             var className = item.state ==1?"icon-cc-heart":"icon-cc-heart-o"; // 1已经被关注收藏  0 未被关注收藏
                             var telHanderHtml='',telShowHtml='',xyAcademy2Html='';
                             if(item.showMobile){//false不公开 true公开
-                                telHanderHtml='<a href="tel:'+item.mobile+'"><i class="iconfont">&#xe634;</i></a>';
+                                telHanderHtml='<a href="tel:'+item.mobile+'"><i class="iconfont icon-tel">&#xe634;</i></a>';
                                 telShowHtml= '<p class="weui-media-box__desc">电话：<span>'+item.mobile+'</span></p>'
                             }
                             if(item.xyAcademy2!=null){
@@ -291,26 +291,32 @@
         //收藏该校友 取消收藏该校友 发送信息
         $('.alumni-list').on('click',function(e){
             var openId,state;
-            if($(e.target).is('.icon-da-call')){
-                if($(e.target).is('.icon-cc-heart')){
-                    $(e.target).addClass('icon-cc-heart-o').removeClass('icon-cc-heart');//取消收藏
+            var $target = $(e.target)；
+            if($target.is('.icon-da-call')){
+                if($target.is('.icon-cc-heart')){
+                    $target.addClass('icon-cc-heart-o').removeClass('icon-cc-heart');//取消收藏
                     state=1 //操作类型   0添加收藏 1取消收藏
                 }else{
-                    $(e.target).addClass('icon-cc-heart').removeClass('icon-cc-heart-o');//收藏
+                    $target.addClass('icon-cc-heart').removeClass('icon-cc-heart-o');//收藏
                     state=0
                 }
                 var daCallUrl = '${req.contextPath}/we/xy/collect';
-                openId = $(e.target).parent().data('openid');
+                openId = $target.parent().data('openid');
                 $.post(daCallUrl, {xy_openId:openId,state:state },function(d){
                     if(d.code==0){
                         bb_toast(data.msg)
                     }
                  });
-            }else if($(e.target).is('.icon-send-msg')){
-                openId = $(e.target).parent().data('openid');
-                var name = $(e.target).parent().data('name');
+            }else if($target.is('.icon-send-msg')){//发送信息
+                openId = $target.parent().data('openid');
+                var name = $target.parent().data('name');
                 sendSms(openId,name)
-            }
+            }else if($target.is('.icon-tel')){//打电话埋点
+                 openId = $target.parents('span').data('openid');
+                 $.post('${req.contextPath}/we/callXy', { toOpenId: openId},function(d){
+                       console.log(d.msg)
+                 });
+             }
         });
         //发送信息
         function sendSms(openId, to){

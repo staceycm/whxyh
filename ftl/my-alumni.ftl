@@ -3,12 +3,12 @@
 <head>
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" charset="utf-8">
     <title>校友录</title>
-    <link rel="stylesheet" type="text/css" href="assets/css/custom.css">
-    <link rel="stylesheet" type="text/css" href="assets/css/weui.css">
-    <link rel="stylesheet" type="text/css" href="assets/css/w-reset.css">
-    <link rel="stylesheet" type="text/css" href="assets/font/iconfont.css">
-    <script src="assets/js/jquery-3.1.1.min.js"></script>
-    <script src="assets/js/base.js"></script>
+    <link rel="stylesheet" type="text/css" href="${req.contextPath}/assets/css/custom.css">
+    <link rel="stylesheet" type="text/css" href="${req.contextPath}/assets/css/weui.css">
+    <link rel="stylesheet" type="text/css" href="${req.contextPath}/assets/css/w-reset.css">
+    <link rel="stylesheet" type="text/css" href="${req.contextPath}/assets/font/iconfont.css">
+    <script src="${req.contextPath}/assets/js/jquery-3.1.1.min.js"></script>
+    <script src="${req.contextPath}/assets/js/base.js"></script>
 </head>
 <body style="background: #FFFFFF">
     <div class="page_bd page-my-alumni">
@@ -83,11 +83,11 @@
         function getAlumniList(){
             var alumniUrl = '', alumniHtml='';
             if(page=='collect'){
-                alumniUrl = 'https://xyh.botbrain.ai/we/xy/get_myxy_collect?start='+storage[page].start;
+                alumniUrl = '${req.contextPath}/we/xy/get_myxy_collect?start='+storage[page].start;
             }else{
-                alumniUrl='https://xyh.botbrain.ai/we/xy/my_xy_conn?start='+storage[page].start;
+                alumniUrl='${req.contextPath}/we/xy/my_xy_conn?start='+storage[page].start;
             }
-            $.ajax({url:alumniUrl,type:'post',dataType:"jsonp",success:
+            $.ajax({url:alumniUrl,type:'post',success:
                 function(d){
                     if(d.code==0){
                         (d.data||[]).forEach(function(item,idx){
@@ -102,7 +102,7 @@
                             if(item.fhName.length!=0){//所属分会
                                 fhHtml='<p class="weui-media-box__desc" style="padding-bottom:6px;">所属分会：'+item.fhName.join("、")+'</p>'
                             }
-                            var headImg=d.data.sex=='女'?"assets/img/f-user.png":"/assets/img/m-user.png";//el替换
+                            var headImg=d.data.sex=='女'?"${req.contextPath}/assets/img/f-user.png":"${req.contextPath}/assets/img/m-user.png";//el替换
                             if(item.headImgUrl && item.headImgUrl!==""){
                                 headImg=item.headImgUrl
                             }
@@ -125,7 +125,7 @@
                              storage[page].all=true;//已经全部加载完
                              if(d.data.length==0&&storage[page].start==1){//第一次加载且数据为空时
                                    alumniHtml = $('<div class="bigPic_container feed-detail-container no-content">'+
-                                            '<img src="./assets/img/null.png" />'+
+                                            '<img src="${req.contextPath}/assets/img/null.png" />'+
                                             '<div class="bigPic_active font12">'+
                                             '<div class="bigPic_source" style="text-align: center">暂无数据~</div>'+
                                             '</div></div>');
@@ -146,15 +146,16 @@
                     state=1 //操作类型   0添加收藏 1取消收藏
                     bb_confirm("取消收藏", "确认取消收藏该校友吗？", "放弃", "确定", function(wc){
                         if(wc == "right"){
-                             var daCallUrl = 'https://xyh.botbrain.ai/we/cap/add';
+                             var daCallUrl = '${req.contextPath}/we/xy/collect';
                              openId = $(e.target).parent().data('openid');
                              $.post(daCallUrl, { xy_openId: openId,state:state },function(d){
                                  if(d.code==0){
-                                      $target.addClass('icon-cc-heart-o').removeClass('icon-cc-heart');//取消收藏
-                                      if($target.parents('.alumni-list').is('.alumni-collect-list')){//如果是我收藏的列表 需要将该校友移除
-                                          $target.parents('.weui-media-box').hide().remove();
-                                      }
-                                      bb_toast(d.msg)
+                                        $target.addClass('icon-cc-heart-o').removeClass('icon-cc-heart');//取消收藏
+                                        if($target.parents('.alumni-list').is('.alumni-collect-list')){//如果是我收藏的列表 需要将该校友移除
+                                            $target.parents('.weui-media-box').hide().remove();
+                                        }
+                                        bb_toast(d.msg)
+
                                  }else{
                                      bb_alert(d.msg)
                                  }
@@ -162,13 +163,13 @@
                         }
                     });
                 }
-            }else if($target.is('.icon-send-msg')){ //发送信息
+            }else if($target.is('.icon-send-msg')){//发送信息
                 openId = $target.parent().data('openid');
                 var name = $target.parent().data('name');
                 sendSms(openId,name)
             }else if($target.is('.icon-tel')){//打电话埋点
                 openId = $target.parents('span').data('openid');
-                $.post('https://xyh.botbrain.ai/we/callXy', { toOpenId: openId},function(d){
+                $.post('${req.contextPath}/we/callXy', { toOpenId: openId},function(d){
                       console.log(d.msg)
                 });
             }
@@ -199,7 +200,7 @@
                     bb_toast("留言内容不能为空");
                     return;
             	}
-            	$.post("https://xyh.botbrain.ai/we/leaveMsg", {"toOpenId": openId, "msg":$txt.val()}, function(d){
+            	$.post("${req.contextPath}/we/leaveMsg", {"toOpenId": openId, "msg":$txt.val()}, function(d){
             		bb_toast(d.msg);
             		if(d.code==0){
             			$dialog.fadeOut(200);
