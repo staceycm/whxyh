@@ -142,26 +142,35 @@
             var openId,state;
             var $target = $(e.target);
             if($target.is('.icon-da-call')){
-                if($target.is('.icon-cc-heart')){
+                openId = $(e.target).parent().data('openid');
+                var daCallUrl = '${req.contextPath}/we/cap/add';
+                if($target.is('.icon-cc-heart')){//取消收藏
                     state=1 //操作类型   0添加收藏 1取消收藏
-                    bb_confirm("取消收藏", "确认取消收藏该校友吗？", "放弃", "确定", function(wc){
+                    bb_confirm("取消收藏", "确认取消收藏该校友吗？", "放弃", "确定", function(wc){//暂时设计为 取消收藏需要确认弹窗 收藏功能不需要弹窗
                         if(wc == "right"){
-                             var daCallUrl = '${req.contextPath}/we/xy/collect';
-                             openId = $(e.target).parent().data('openid');
                              $.post(daCallUrl, { xy_openId: openId,state:state },function(d){
                                  if(d.code==0){
-                                        $target.addClass('icon-cc-heart-o').removeClass('icon-cc-heart');//取消收藏
-                                        if($target.parents('.alumni-list').is('.alumni-collect-list')){//如果是我收藏的列表 需要将该校友移除
-                                            $target.parents('.weui-media-box').hide().remove();
-                                        }
-                                        bb_toast(d.msg)
-
+                                      $target.addClass('icon-cc-heart-o').removeClass('icon-cc-heart');//取消收藏
+                                      if($target.parents('.alumni-list').is('.alumni-collect-list')){//如果是我收藏的列表 需要将该校友移除
+                                          $target.parents('.weui-media-box').hide().remove();
+                                      }
+                                      bb_toast(d.msg)
                                  }else{
                                      bb_alert(d.msg)
                                  }
                              });
                         }
                     });
+                }else{//收藏功能 只可能出现在我联系过的列表里
+                     state=0
+                     $.post(daCallUrl, { xy_openId: openId,state:state },function(d){
+                          if(d.code==0){
+                              $target.addClass('icon-cc-heart').removeClass('icon-cc-heart-o');//收藏
+                               bb_toast(d.msg)
+                          }else{
+                              bb_alert(d.msg)
+                          }
+                      });
                 }
             }else if($target.is('.icon-send-msg')){//发送信息
                 openId = $target.parent().data('openid');
