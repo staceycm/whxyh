@@ -241,13 +241,13 @@
                                 telShowHtml= '<p class="weui-media-box__desc">电话：<span>'+item.mobile+'</span></p>'
                             }
                             if(item.xyAcademy2!=null){
-                                xyAcademy2Html='    <p class="weui-media-box__desc" style="padding-bottom:6px;">'+item.xyAcademy2+'-'+item.xyType2+'</p>';
+                                xyAcademy2Html='    <p class="weui-media-box__desc" style="padding-bottom:6px;">'+item.xyAcademy2+'-'+item.xyType2+'-'+item.xyYear2+'</p>';
                             }
                             var headImg=d.data.sex=='女'?"${req.contextPath}/assets/img/f-user.png":"${req.contextPath}//assets/img/m-user.png";
                             if(item.headImgUrl && item.headImgUrl!==""){
                                 headImg=item.headImgUrl
                             }
-                            alumniHtml+='<div class="weui-media-box weui-media-box_friends">'+
+                            alumniHtml+='<div class="weui-media-box weui-media-box_friends" data-openid="'+item.openId+'">'+
                                            '  <div class="weui-media-box__hd">'+
                                            '    <img class="weui-media-box__thumb circle-img" src="'+headImg+'">'+
                                            '  </div>'+
@@ -256,7 +256,7 @@
                                            '        <b>'+item.name+'</b>'+
                                            '        <span data-openid="'+item.openId+'" data-name="'+item.name+'"><i class="iconfont icon-da-call '+className+'" ></i><i class="iconfont icon-send-msg" >&#xe643;</i>'+telHanderHtml+'</span>'+
                                            '    </h4>'+
-                                           '    <p class="weui-media-box__desc" style="padding-bottom:6px;">'+item.xyAcademy+'-'+item.xyType+'</p>'+xyAcademy2Html+
+                                           '    <p class="weui-media-box__desc" style="padding-bottom:6px;">'+item.xyAcademy+'-'+item.xyType+'-'+item.xyYear+'</p>'+xyAcademy2Html+
                                            '    <p class="weui-media-box__desc" style="padding-bottom:6px;">'+item.danwei+'-'+item.zhiwu+'</p>'+telShowHtml+
                                            '  </div>'+
                                            '</div>'
@@ -291,7 +291,7 @@
         //收藏该校友 取消收藏该校友 发送信息
         $('.alumni-list').on('click',function(e){
             var openId,state;
-            var $target = $(e.target)；
+            var $target = $(e.target);
             if($target.is('.icon-da-call')){
                 if($target.is('.icon-cc-heart')){
                     $target.addClass('icon-cc-heart-o').removeClass('icon-cc-heart');//取消收藏
@@ -304,7 +304,7 @@
                 openId = $target.parent().data('openid');
                 $.post(daCallUrl, {xy_openId:openId,state:state },function(d){
                     if(d.code==0){
-                        bb_toast(data.msg)
+                        bb_toast(d.msg)
                     }
                  });
             }else if($target.is('.icon-send-msg')){//发送信息
@@ -316,7 +316,12 @@
                  $.post('${req.contextPath}/we/callXy', { toOpenId: openId},function(d){
                        console.log(d.msg)
                  });
-             }
+            }else{
+                  openId = $target.parents('.weui-media-box').data('openid');
+                  if(openId){//如果存在openId 说明没点击在页面空白处
+                      window.location.href=""//请替换路径
+                  }
+              }
         });
         //发送信息
         function sendSms(openId, to){

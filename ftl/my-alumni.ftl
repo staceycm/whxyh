@@ -106,7 +106,7 @@
                             if(item.headImgUrl && item.headImgUrl!==""){
                                 headImg=item.headImgUrl
                             }
-                            alumniHtml+='<div class="weui-media-box weui-media-box_friends">'+
+                            alumniHtml+='<div class="weui-media-box weui-media-box_friends" data-openid="'+item.openId+'">'+
                                            '  <div class="weui-media-box__hd">'+
                                            '    <img class="weui-media-box__thumb circle-img" src="'+headImg+'">'+
                                            '  </div>'+
@@ -181,7 +181,12 @@
                 $.post('${req.contextPath}/we/callXy', { toOpenId: openId},function(d){
                       console.log(d.msg)
                 });
-            }
+            }else{
+                  openId = $target.parents('.weui-media-box').data('openid');
+                  if(openId){//如果存在openId 说明没点击在页面空白处
+                      window.location.href=""//请替换路径
+                  }
+              }
         });
         //发送信息
         function sendSms(openId, to){
