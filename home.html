@@ -18,9 +18,7 @@
         <div class="weui-tab">
             <div class="weui-tab__panel">
                 <div class="swiper-container">
-                    <div class="swiper-wrapper">
-
-                    </div>
+                    <div class="swiper-wrapper"></div>
                     <div class="swiper-pagination"></div>
                 </div>
                 <div class="branch-list-wrap">
@@ -131,14 +129,6 @@
     <script>
      $(function(){
          var page= 'feed';//'intro active'
-         var mySwiper = new Swiper ('.swiper-container', {
-             loop: true,
-             autoplay: true,//可选选项，自动滑动
-             // 如果需要分页器
-             pagination: {
-               el: '.swiper-pagination'
-             }
-           });
          var storage={feed:{},active:{st:1,all:false}};//st:活动页初始页面为 1 all:是否全部加载完 //缓存资讯数据
          var getListFlag=true;//数据锁
 

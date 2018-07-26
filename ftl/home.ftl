@@ -60,7 +60,7 @@
 北京校友会希望可以团结在北京的武大历届校友，互相帮助，为北京的城市发展、国家的进步带来积极影响和贡献。</p>
                         </div>
                         <div class="intro-frame">
-                            <span class="intro-frame-title">武大校友会架构</span>
+                            <span class="intro-frame-title">武大北京校友会架构</span>
                             <div class="intro-frame-list">
                                 <ul>
                                     <!-- <li><a class="bg1 font20" href="${req.contextPath}/we/h5/cap/index?id=106668">老校友会</a></li>
@@ -131,14 +131,6 @@
 <script>
  $(function(){
      var page= 'feed';//'intro active'
-     var mySwiper = new Swiper ('.swiper-container', {
-         loop: true,
-         autoplay: true,//可选选项，自动滑动
-         // 如果需要分页器
-         pagination: {
-           el: '.swiper-pagination'
-         }
-       });
      var storage={feed:{},active:{st:1,all:false}};//st:活动页初始页面为 1 all:是否全部加载完 //缓存资讯数据
      var getListFlag=true;//数据锁
 
@@ -332,13 +324,13 @@
              
              (d.data.data||[]).map(function(item,idx){
                   var start = formatDateTime(item.actStrTime,'noyear'),end = formatDateTime(item.actEndTime,'noyear');
-                  activeHtml = $('<div class="bigPic_container feed-detail-container">'+
-                           '<a href="${req.contextPath}/we/h5/act/index?actId='+item.id+'"><img src="'+item.img_url+'"/></a>'+
+                  activeHtml = $('<a href="${req.contextPath}/we/h5/act/index?actId='+item.id+'"><div class="bigPic_container feed-detail-container">'+
+                           '<img src="'+item.img_url+'"/>'+
                            '<p class="bigPic_text font18">'+item.name+'</p>'+
                            '<div class="bigPic_active font14">'+
                            '<div class="bigPic_source"><i class="iconfont">&#xe68f;</i> 活动时间：'+start+'~'+end+'</div>'+
                            '<div class="bigPic_source"><i class="iconfont">&#xe6c3;</i> 活动地点：'+item.actAddr+'</div>'+
-                           '</div></div>');
+                           '</div></div></a>');
                   $('.active-detail').append(activeHtml);
               })
              if(d.data.data.length<10){
