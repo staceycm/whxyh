@@ -23,6 +23,15 @@
       </div>
     </div>
     <!--END dlg_alert-->
+    <!--BEGIN toast-->
+    <div id="toast" style="display: none;">
+      <div class="weui-mask_transparent"></div>
+      <div class="weui-toast">
+        <i class="weui-icon-success-no-circle weui-icon_toast"></i>
+        <p class="weui-toast__content">已完成</p>
+      </div>
+    </div>
+    <!--END toast-->
     <!--BEGIN dlg_confirm-->
     <div id="dlg_confirm" style="display: none;">
       <div class="weui-mask"></div>
@@ -36,6 +45,40 @@
       </div>
     </div>
     <!--END dlg_confirm-->
+    <!--BEGIN dlg_alert-->
+        <div id="dlg_pushsms" style="display: none;">
+          <div class="weui-mask"></div>
+          <div class="weui-dialog">
+            <div class="weui-dialog__hd"><strong class="weui-dialog__title">活动通知</strong></div>
+            <div class="weui-dialog__bd">
+                <div class="weui-cell weui-cell-flex-start">
+                  <div class="weui-cell__hd"><label class="weui-label">通知内容:</label></div>
+                  <div class="weui-cell__bd"><textarea name="content" class="weui-textarea" rows="4"></textarea></div>
+              </div>
+              <div class="weui-cell">
+                <div class="weui-cell__hd"><label class="weui-label">主题:</label></div>
+                <div class="weui-cell__bd"><span class="push-name" ></span></div>
+              </div>
+            <div class="weui-cell">
+              <div class="weui-cell__hd"><label class="weui-label">时间:</label></div>
+              <div class="weui-cell__bd"><span class="push-time" ></span></div>
+            </div>
+            <div class="weui-cell weui-cell-flex-start">
+                <div class="weui-cell__hd"><label class="weui-label">地点:</label></div>
+                <div class="weui-cell__bd"><span class="push-address" ></span></div>
+            </div>
+            <div class="weui-cell weui-cell-flex-start">
+                <div class="weui-cell__hd"><label class="weui-label">接收人群:</label></div>
+                <div class="weui-cell__bd weui-checkbox-wrap"></div>
+            </div>
+            </div>
+            <div class="weui-dialog__ft">
+                <a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_default">取消</a>
+                <a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_primary">确定</a>
+            </div>
+          </div>
+        </div>
+        <!--END dlg_alert-->
     <div class="page_bd page-active-manage">
         <div class="weui-tab" style="height: auto">
             <div class="weui-tab__panel" style="height: auto;">
@@ -74,7 +117,7 @@
                                 </div>
                                 <div class="weui-cell">
                                     <div class="weui-cell__bd">向校友会成员发送活动通知</div>
-                                    <div class="weui-cell__ft"><a id="btn_copy_mobile" href="javascript:;" class="weui-btn_plain-primary">发送</a></div>
+                                    <div class="weui-cell__ft"><a id="btn_push_sms" href="javascript:;" class="weui-btn_plain-primary push" data-name="武汉大sd北京vvvv友会2017年迎新大会"  data-time="08月18日  15:49 ~ 07月20日  17:47" data-address="泰康商学院" data-activeid="13435">发送</a></div>
                                 </div>
                             </div>
                         </div>
@@ -104,7 +147,7 @@
                                 </div>
                                 <div class="weui-cell">
                                     <div class="weui-cell__bd">向校友会成员发送活动通知</div>
-                                    <div class="weui-cell__ft"><a id="btn_copy_mobile" href="javascript:;" class="weui-btn_plain-primary">发送</a></div>
+                                    <div class="weui-cell__ft"><a id="btn_push_sms" href="javascript:;" class="weui-btn_plain-primary">发送</a></div>
                                 </div>
                             </div>
                             <div class="active-handler line-btn-delete">
@@ -168,11 +211,11 @@
                         }
                         if(item.ts_ok==1){//0 无推送按钮 1 显示推送按钮
                             pushHtml='<div class="weui-cell"><div class="weui-cell__bd">向校友会成员发送活动通知</div>';
-                            if(item.ts_state==1){ //0,null 未推送 显示发布按钮 1 已推送 显示已发布按钮
-                                pushHtml+='<div class="weui-cell__ft"><a id="btn_copy_mobile" href="javascript:;" class="weui-btn_plain-primary push" data-activeid="'+item.id+'">发送</a></div>'
-                            }else{
-                                pushHtml+='<div class="weui-cell__ft"><a id="btn_copy_mobile" href="javascript:;" class="weui-btn_plain-primary pushed">已发送</a></div>'
-                            }
+                            // if(item.ts_state==1){ //0,null 未推送 显示发布按钮 1 已推送 显示已发布按钮 --->可多次推送 不再需要判断
+                                pushHtml+='<div class="weui-cell__ft"><a  href="javascript:;" class="weui-btn_plain-primary push" data-name="'+item.name+'" data-time="'+start+' ~ '+end+'"  data-address="'+item.actAddr+'" data-activeid="'+item.id+'">发送</a></div>'
+                            // }else{
+                            //     pushHtml+='<div class="weui-cell__ft"><a id="btn_push_sms" href="javascript:;" class="weui-btn_plain-primary pushed">已发送</a></div>'
+                            // }
                             pushHtml+='</div>';
                         }
                         if(item.ed_dl==1){//1 属于本分会的活动可编辑 0 属于其他分会的活动不可编辑
@@ -225,7 +268,7 @@
                     if(d.data.length<10){//如果请求返回数据少于10 说明已经没有更多数据
                         storage[state].all=true;
                         if(d.data.length==0&&storage[state].start==1){//第一次请求 且无数据 则显示为空状态
-                           activeHtml=$('<div class="bigPic_container feed-detail-container">'+
+                           activeHtml=$('<div class="bigPic_container feed-detail-container no-content">'+
                               '<img src="./assets/img/null.png" />'+
                               '<div class="bigPic_active font12">'+
                               '<div class="bigPic_source" style="text-align: center">还没有活动哦~</div>'+
@@ -297,7 +340,6 @@
                          });
                      }
                  }
-
         getActive('change');
         //切换页面
         $('#tagnav li').on('click',function(){
@@ -334,16 +376,68 @@
                         }
                     });
                 }
-            if($target.is('.push')){
-                $.post('https://xyh.botbrain.ai/we/act/add_new', { act_id: id },function(data){
+            if($target.is('.push')){//先弹窗
+            // 获取活动数据
+                var obj={pushName:$target.data('name'),pushTime:$target.data('time'),pushAdd:$target.data('address'),pushId:id};
+                pushSms(obj)
+            }
+        })
+        function pushSms(obj){
+            var $dialog = $('#dlg_pushsms');
+            var getPushUrl = 'https://xyh.botbrain.ai/we/admin/getPushCha?act_id='+obj.pushId;//el替换
+             $.ajax({url:getPushUrl,type:'post',dataType:"jsonp",success:function(d){
+                if(d.code==0){
+                    var radioHtml='<div class="tool-checkbox">'+
+                               '    <span><input type="checkbox" name="receive-people" id="all-people" class="input-checkbox" value="0" checked /><label for="all-people"></label></span>'+
+                               '    <span class="checkbox-label">已报名人员('+d.data.act_num+'人)</span>'+
+                               '</div>';
+                    (d.data.fh_list||[]).forEach(function(item,idx){
+                        radioHtml+='<div class="tool-checkbox">'+
+                                  '    <span><input type="checkbox" name="receive-people" id="'+item.id+'" class="input-checkbox" value="'+item.id+'" /><label for="'+item.id+'"></label></span>'+
+                                  '    <span class="checkbox-label">'+item.jc_name+'('+item.persons_num+'人)</span>'+
+                                  '</div>';
+                    })
+                    $('.weui-checkbox-wrap').append(radioHtml);
+                    //填充活动数据
+                    $('#dlg_pushsms .push-name').html(obj.pushName);
+                    $('#dlg_pushsms .push-time').html(obj.pushTime);
+                    $('#dlg_pushsms .push-address').html(obj.pushAdd);
+                    $dialog.fadeIn(200);
+                }
+             }});
+            $dialog.find('.weui-dialog__btn_default').one('click', function () {
+                 $dialog.fadeOut(200);
+                 // 先清除弹窗内容
+                 $('#dlg_pushsms textarea[name="content"]').val('');
+                 $('#dlg_pushsms .push-name,#dlg_pushsms .push-time,#dlg_pushsms .push-address').html('')
+                 $('.weui-checkbox-wrap').html('');
+            });
+            $txt = $dialog.find('.weui-textarea');
+            $dialog.find('.weui-dialog__btn_primary').unbind().on('click', function () {
+                if($txt.val().length>50){
+                    bb_toast("通知内容不能超过50个字符");
+                    return;
+                }else if($txt.val().length==0){
+                    bb_toast("留言内容不能为空");
+                    return;
+                }
+                //获取分会id字符串
+                var fh_ids ='';
+                $(":checkbox[name='receive-people']:checked").each(function(idx,item){
+                    fh_ids+=$(this).val()+','
+                })
+                fh_ids=fh_ids.substring(0,fh_ids.length-1);
+
+                $.post('https://xyh.botbrain.ai/we/message/ts', { act_id: obj.pushId,msg:$txt.val(),fh_ids: fh_ids},function(data){
                     if(data.code==0){
-                        $target.removeClass('push').addClass('pushed')
+                        bb_toast('发布成功');
+                        $dialog.fadeOut(200);
                     }else{
                          bb_alert(data.msg);
                     }
-               });
-            }
-        })
+                });
+          });
+        }
         $(document).scroll(function(){
             if($(document).height() - $(document).scrollTop() - window.innerHeight <100 ){
                 if(!storage[state].all) {
