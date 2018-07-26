@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" charset="utf-8">
-    <title>校友录</title>
+    <title>我的校友</title>
     <link rel="stylesheet" type="text/css" href="${req.contextPath}/assets/css/custom.css">
     <link rel="stylesheet" type="text/css" href="${req.contextPath}/assets/css/weui.css">
     <link rel="stylesheet" type="text/css" href="${req.contextPath}/assets/css/w-reset.css">
@@ -65,6 +65,15 @@
           </div>
         </div>
     <!--END dlg_confirm-->
+    <!--BEGIN dlg_alert-->
+    <div id="dlg_alert" style="display: none;">
+      <div class="weui-mask"></div>
+      <div class="weui-dialog">
+        <div class="weui-dialog__bd">内容部分。</div>
+        <div class="weui-dialog__ft"><a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_primary" >知道了</a></div>
+      </div>
+    </div>
+    <!--END dlg_alert-->
     <script>
      $(function(){
          var page='collect';//‘contact’
@@ -92,6 +101,7 @@
                     if(d.code==0){
                         (d.data||[]).forEach(function(item,idx){
                             var telHanderHtml='',telShowHtml='',xyAcademy2Html='',fhHtml='';
+                            var className = item.state ==1?"icon-cc-heart":"icon-cc-heart-o";
                             if(item.showMobile){//false不公开 true公开
                                 telHanderHtml='<a href="tel:'+item.mobile+'"><i class="iconfont icon-tel">&#xe634;</i></a>';//打电话图标
                                 telShowHtml= '<p class="weui-media-box__desc" style="padding-bottom:6px;">电话：<span>'+item.mobile+'</span></p>'//电话号码
@@ -113,7 +123,7 @@
                                            '  <div class="weui-media-box__bd">'+
                                            '    <h4 class="weui-media-box__title">'+
                                            '        <b>'+item.name+'</b>'+
-                                           '        <span data-openid="'+item.openId+'" data-name="'+item.name+'"><i class="iconfont icon-da-call icon-cc-heart"></i><i class="iconfont icon-send-msg">&#xe643;</i>'+telHanderHtml+'</span>'+
+                                           '        <span data-openid="'+item.openId+'" data-name="'+item.name+'"><i class="iconfont icon-da-call '+className+'"></i><i class="iconfont icon-send-msg">&#xe643;</i>'+telHanderHtml+'</span>'+
                                            '    </h4>'+
                                            '    <p class="weui-media-box__desc" style="padding-bottom:6px;">'+(item.xyYear?item.xyYear+'级-':'')+item.xyAcademy+'-'+item.xyType+'</p>'+xyAcademy2Html+fhHtml+
                                            '    <p class="weui-media-box__desc" style="padding-bottom:6px;">'+item.danwei+'-'+item.zhiwu+'</p>'+telShowHtml+
@@ -143,7 +153,7 @@
             var $target = $(e.target);
             if($target.is('.icon-da-call')){
                 openId = $(e.target).parent().data('openid');
-                var daCallUrl = '${req.contextPath}/we/cap/add';
+                var daCallUrl = '${req.contextPath}/we/xy/collect';
                 if($target.is('.icon-cc-heart')){//取消收藏
                     state=1 //操作类型   0添加收藏 1取消收藏
                     bb_confirm("取消收藏", "确认取消收藏该校友吗？", "放弃", "确定", function(wc){//暂时设计为 取消收藏需要确认弹窗 收藏功能不需要弹窗
@@ -184,7 +194,7 @@
             }else{
                   openId = $target.parents('.weui-media-box').data('openid');
                   if(openId){//如果存在openId 说明没点击在页面空白处
-                      window.location.href=""//请替换路径
+                      window.location.href="${req.contextPath}/we/h5/xy/xyinfo_xq?uid="+openId+"&state=my"//请替换路径
                   }
               }
         });
