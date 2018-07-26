@@ -158,7 +158,7 @@ $(function(){
           $.ajax({url:fhUrl,type:'post',dataType:"jsonp",success:
                function(d){
                     if(d.code==0){
-                        mock.data.forEach(function(item,idx){
+                        d.data.forEach(function(item,idx){
                             var firstLeter = item.jc_name.substr(0,1);
                             var className='',checked=""
                             fhData[item.id]={};
