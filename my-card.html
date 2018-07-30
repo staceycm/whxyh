@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" charset="utf-8">
+    <title>活动管理</title>
+    <link rel="stylesheet" type="text/css" href="assets/css/custom.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/weui.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/w-reset.css">
+    <link rel="stylesheet" type="text/css" href="assets/font/iconfont.css">
+    <link rel="stylesheet" type="text/css" href="assets/plugin/swiper/swiper-4.3.3.min.css">
+
+    <script src="assets/js/jquery-3.1.1.min.js"></script>
+    <script src="assets/plugin/swiper/swiper-4.3.3.min.js"></script>
+    <script src="assets/js/base.js"></script>
+</head>
+<body>
+    <!--BEGIN toast-->
+    <div id="toast" style="display: none;">
+      <div class="weui-mask_transparent"></div>
+      <div class="weui-toast">
+        <i class="weui-icon-success-no-circle weui-icon_toast"></i>
+        <p class="weui-toast__content">已完成</p>
+      </div>
+    </div>
+    <!--END toast-->
+    <!--BEGIN dlg_alert-->
+    <div id="dlg_alert" style="display: none;">
+      <div class="weui-mask"></div>
+      <div class="weui-dialog">
+        <div class="weui-dialog__bd">内容部分。</div>
+        <div class="weui-dialog__ft"><a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_primary" >知道了</a></div>
+      </div>
+    </div>
+    <!--END dlg_alert-->
+
+    <div class="page_bd page-my-card">
+        <div class="card-wrap">
+            <img src="" alt="">
+            <div class="card-handle">
+                <span class="card-choice"><i class="iconfont icon-choice">&#xe601;</i></span>
+                <span class="card-down"><a href="https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1380400117,1753524827&fm=27&gp=0.jpg" download="1.jpg"><i class="iconfont icon-down">&#xe64a;</i></a></span>
+            </div>
+        </div>
+        <div class="card-modal" style="display: none;">
+            <h4>选择模板</h4>
+            <div class="weui-navigator">
+                <div id="tagnav" class="weui-navigator-wrapper">
+                   <ul class="weui-navigator-list">
+                       <!--<li class="active"><img src="assets/img/card-bg1.png" alt=""></li>
+                       <li><img src="assets/img/card-bg2.png" alt=""></li>
+                       <li><img src="assets/img/card-bg3.png" alt=""></li>
+                       <li><img src="assets/img/card-bg1.png" alt=""></li>
+                       <li><img src="assets/img/card-bg2.png" alt=""></li>
+                       <li><img src="assets/img/card-bg1.png" alt=""></li>
+                       <li><img src="assets/img/card-bg1.png" alt=""></li>-->
+                    </ul>
+                </div>
+            </div>
+            <div class="weui-dialog__ft">
+                <a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_default">取消</a>
+                <a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_primary">确定</a>
+            </div>
+          </div>
+        </div>
+    </div>
+    <script>
+     $(function(){
+         $('.icon-choice').on('click',function(){//点击预览模板
+             previewModal()
+         })
+         $('.icon-down').on('click',function(){//点击下载图片到本地
+             // downImg()
+             // downloadIamge();
+         })
+         //获取模板列表
+         function initCardModal(){
+             var cardListUrl='https://xyh.botbrain.ai/we/getCardTemplates';
+             $.ajax({url:cardListUrl,type:'post',dataType:"jsonp",success:function(d){
+                 if(d.code==0){
+                     var cardHtml='';
+                     (d.data||[]).forEach(function(item,idx){
+                        cardHtml+='<li data-cardid= "'+item.template_url+'"><img src="'+item.template_url+'" alt=""></li>'                     })
+                 }
+                 $('.weui-navigator-list').append(cardHtml);//生成模板html结构
+                 //根据返回结果计算列表长度
+                 var sum_width=0;
+                 $('.weui-navigator-list li:first').addClass('active');
+                 // 重新计算模板list长度
+                 $('.weui-navigator-list li').map(function(idx,item){
+                     sum_width+=($(item).width())+15;
+                 });
+                 $('.weui-navigator-list').width(sum_width+15);
+                 //获取默认模板的
+                 getCard("");//不传id 默认为用户已选择（或默认）模板
+                 $('.weui-navigator-list li').on('click',function(e){
+                     $(this).addClass('active').siblings('li').removeClass('active')
+                     id=$(this).data('cardid');
+                     getCard(id)
+                 })
+             }});
+         }
+         //生成预览模板图片
+         function getCard(id){
+            var loadUrl =$('.weui-navigator-list li.active').find('img').prop('src');
+            $('.card-wrap img').prop('src',loadUrl);
+            // $('.card-down a').prop({href: loadUrl,download:'mycard.png'})
+            //  var cardUrl='https://xyh.botbrain.ai/we/getcards';
+            //  $.ajax({
+            //      url: cardUrl,
+            //      type: 'GET',
+            //      data: {
+            //          template_id: id
+            //      },
+            //      success: function (res) {
+            //          console.log(res);
+            //          $('.card-wrap img').prop('src',loadUrl);
+            //      }
+            // });
+         }
+         initCardModal();
+         //预览模板模态窗
+         function previewModal(){
+             var $dialog = $('.card-modal');
+             $dialog.fadeIn(200);
+             var startSrc =$('.card-wrap img').prop('src');
+             $dialog.find('.weui-dialog__btn_default').one('click', function () {//取消
+                  $dialog.fadeOut(200);
+                  $('.card-wrap img').prop('src',startSrc);
+             });
+             $dialog.find('.weui-dialog__btn_primary').unbind().on('click', function () {//保存
+                 $.post('https://xyh.botbrain.ai/we/savaCard', { template_id:$('.weui-navigator-list li.active').data('cardid')},function(data){
+                     if(data.code==0){
+                         bb_toast(data.msg);
+                         $dialog.fadeOut(200);
+                     }else{
+                          bb_alert(data.msg);
+                     }
+                 });
+           });
+         }
+         function downImg(){//方法一
+             //创建下载任务
+             var loadUrl =$('.card-wrap img').prop('src');
+             var picName=loadUrl.split("/").pop();//图片名称为路径后返回的图片名称
+             var relativePath="_downloads/" + picName;//保存的本地路径
+             alert(plus);
+             var dtask = plus.downloader.createDownload(loadUrl, {}, function(d, status) {
+                 if (status == 200) {
+                     //下载成功
+                     alert("下载成功=" + relativePath);
+                     plus.gallery.save(picname,function() {//保存到相册方法
+                          bb_toast('已保存到手机相册');
+                          }, function() {
+                          bb_toast('保存失败，请重试！');
+                          });
+                 } else {
+                     console.log("下载失败=" + status+"=="+relativePath);
+                 }
+             });
+             //启动下载任务
+             dtask.start();
+         }
+         function downloadIamge() {//方法二
+             var loadUrl =$('.card-wrap img').prop('src');
+             // loadUrl = loadUrl.split("(")[1].split(")")[0];//下载路径为当前模板背景图片路径
+              var picName=loadUrl.split("/").pop();//图片名称为路径后返回的图片名称
+             var image = new Image()
+             // 解决跨域 Canvas 污染问题
+             image.setAttribute('crossOrigin', 'anonymous');
+             image.onload = function () {
+                 alert(11);
+                 var canvas = document.createElement('canvas')
+                 canvas.width = image.width
+                 canvas.height = image.height
+
+                 var context = canvas.getContext('2d')
+                 context.drawImage(image, 0, 0, image.width, image.height)
+                 var url = canvas.toDataURL('image/png')
+
+                 // 生成一个a元素
+                 var a = document.createElement('a')
+                 // 创建一个单击事件
+                 var event = new MouseEvent('click')
+
+                 // 将a的download属性设置为我们想要下载的图片名称，若name不存在则使用‘下载图片名称’作为默认名称
+                 a.download = picName || 'card.png'
+                 // 将生成的URL设置为a.href属性
+                 a.href = url
+
+                 // 触发a的单击事件
+                 a.dispatchEvent(event)
+             }
+             image.src = loadUrl;
+         }
+     })
+
+    </script>
+</body>
+
+</html>
