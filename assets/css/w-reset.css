@@ -50,7 +50,9 @@
 .weui-textarea {
     font-family: -apple-system-font, "Helvetica Neue", sans-serif;
 }
-
+.weui-toast{
+    z-index: 5001;
+}
 /*自定义 custom*/
 /* 注册页 join*/
 .weui-btn_plain-primary-copy{
@@ -367,7 +369,7 @@
     /*-webkit-box-sizing: border-box;*/
     /*padding: 0 15px;*/
 /*}*/
-/*临时样式开始*/
+/*因杨哥暂时需要列表固定四个项目 所以设置临时样式 临时样式开始*/
 .weui-navigator .weui-navigator-list{
     width:100%;
 }
@@ -1083,6 +1085,63 @@
     transform: translateX(-50%);
 }
 /*活动管理页面*/
+#dlg_pushsms .weui-dialog{
+    width: 92%;
+    max-width: initial;
+    max-height: 550px;
+    overflow-y: scroll;
+}
+#dlg_pushsms .weui-dialog .weui-dialog__bd {
+    padding: 0 0em 0.8em;
+}
+#dlg_pushsms .weui-cell{
+    -webkit-align-items: flex-start;
+    align-items: start;
+}
+#dlg_pushsms .weui-label{
+    width: auto;
+    margin-right: 10px;
+    font-size: 15px;
+    color: #666666;
+}
+#dlg_pushsms textarea{
+    border: 1px solid #D5D5D5;
+    border-radius: 5px;
+    padding: 5px;
+    box-sizing: border-box;
+}
+#dlg_pushsms .weui-cell__bd{
+    color: #333333;
+    text-align: left;
+}
+#dlg_pushsms .tool-checkbox{
+    margin-top: 2px;
+    margin-bottom: 5px;
+    height:auto;
+    line-height: normal;
+}
+
+#dlg_pushsms  .tool-checkbox span:first-child{
+    margin-right: 6px;
+}
+#dlg_pushsms .tool-checkbox span:last-child{
+    top: -2px;
+    left: 0;
+}
+#dlg_pushsms .tool-checkbox .input-checkbox+label{
+    margin-right: 0;
+    background: #fff;
+}
+#dlg_pushsms .tool-checkbox .input-checkbox:checked+label:after{
+    left: 1px;
+    top: 1px;
+    bottom: 11px;
+    width: 12px;
+    height: 5px;
+    border: 2px solid #187cdc;
+    border-top-color: transparent;
+    border-right-color: transparent;
+}
 
 .page-active-manage .weui-navigator-list{
     background: #ffffff;
@@ -1371,4 +1430,79 @@
 }
 .page-my-alumni .alumni-list .weui-media-box__title span i.icon-cc-heart{
     color: #f74f51;
+}
+/*校友名片*/
+.card-wrap{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
+.card-handle{
+    margin-top: 15px;
+    float: right;
+    margin-right: 25px;
+}
+.card-handle span{
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
+    background: rgba(0,0,0, .2);
+    border-radius: 50%;
+}
+.card-handle span i{
+    color: #ffffff
+}
+.card-handle span i.icon-down{
+    font-size: 18px;
+}
+.card-handle span:first-child{
+    margin-right: 15px;
+}
+.card-modal{
+    width: 100%;
+    height:162px ;
+    position: fixed;
+    bottom: 0;
+    background-color: #ffffff;
+}
+.card-modal h4{
+    font-size: 13px;
+    color: #999999;
+    padding: 15px;
+    padding-bottom: 7px;
+    font-weight: normal;
+}
+.card-modal .weui-navigator-wrapper{
+    background: #ffffff;
+    overflow-x: scroll;
+}
+.card-modal .weui-navigator-list{
+    overflow: hidden;
+    padding: 8px 0;
+}
+.card-modal .weui-navigator-list li{
+    float: left;
+    width: 50px;
+    height: 62.5px;
+    margin-left: 15px;
+}
+.card-modal .weui-navigator-list li img{
+    width: 100%;
+    height: 100%;
+}
+.card-modal .weui-navigator-list li.active{
+    border: 1.5px solid #30A9FF;
+}
+.card-modal .weui-dialog__ft{
+    height: 40px;
+    line-height: 40px;
+    font-size: 14px;
+    text-align: center;
+}
+.card-modal .weui-dialog__btn_primary{
+    color: #30A9FF;
 }

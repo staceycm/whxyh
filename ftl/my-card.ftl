@@ -35,10 +35,9 @@
 
     <div class="page_bd page-my-card">
         <div class="card-wrap">
-            <img src="" alt="">
             <div class="card-handle">
                 <span class="card-choice"><i class="iconfont icon-choice">&#xe601;</i></span>
-                <span class="card-down"><i class="iconfont icon-down">&#xe64a;</i></span>
+                <span class="card-down"><a href=""><i class="iconfont icon-down">&#xe64a;</i></a></span>
             </div>
         </div>
         <div class="card-modal" style="display: none;">
@@ -67,9 +66,6 @@
      $(function(){
          $('.icon-choice').on('click',function(){//点击预览模板
              previewModal()
-         })
-         $('.icon-down').on('click',function(){//点击下载图片到本地
-             longPress();
          })
          //获取模板列表
          function initCardModal(){
@@ -110,8 +106,8 @@
                  },
                  success: function (res) {
                      console.log(res);
-                     $('.card-wrap img').prop('src',res.data);
-
+                     $('.card-wrap').css('background-image','url('+res.data+')');
+                     $('.card-down a').prop({href: res.data})
                  }
             });
          }
@@ -120,10 +116,11 @@
          function previewModal(){
              var $dialog = $('.card-modal');
              $dialog.fadeIn(200);
-             var startSrc =$('.card-wrap img').prop('src');
+             var startSrc =$('.card-wrap').css('background-image');
+             startSrc = startSrc.split("(")[1].split(")")[0];
              $dialog.find('.weui-dialog__btn_default').one('click', function () {//取消
                   $dialog.fadeOut(200);
-                  $('.card-wrap img').prop('src',startSrc);
+                  $('.card-wrap').css('background-image','url('+startSrc+')');
              });
              $dialog.find('.weui-dialog__btn_primary').unbind().on('click', function () {//保存
                  $.post('${req.contextPath}/we/savaCard', { template_id:$('.weui-navigator-list li.active').data('cardid')},function(data){
@@ -136,14 +133,7 @@
                  });
            });
          }
-         //模拟图片长按操作
-         function longPress(){
-             $('.card-wrap img').trigger('touchstart');
-             var timeout = setTimeout(function(){
-                 $('.card-wrap img').trigger('touchend');
-                 clearTimeout(timeout);
-             },800);
-         }
+         
      })
 
     </script>

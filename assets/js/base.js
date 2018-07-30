@@ -144,7 +144,7 @@ function getDataArr() {
 
         // 判断月份
         if (oDataMonth == month) {
-            for (var _i = datas; _i < oMonthDatas - datas; _i++) {
+            for (var _i = datas; _i <= oMonthDatas ; _i++) {
                 var monthD = new Date(year, oDataMonth, _i);
 
                 if (_i == datas) {
